@@ -5,77 +5,128 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>JuriAgent — Comprendre votre situation foncière (Bénin)</title>
 <style>
-  body{font-family:system-ui,sans-serif;max-width:720px;margin:0 auto;padding:16px;line-height:1.5;color:#1a1a1a}
-  h1{font-size:1.4rem} .sub{color:#555;font-size:.95rem}
-  label{display:block;margin:14px 0 4px;font-weight:600}
-  input,select,textarea{width:100%;padding:10px;font-size:1rem;border:1px solid #bbb;border-radius:8px;box-sizing:border-box}
-  button{margin-top:16px;width:100%;padding:14px;font-size:1.05rem;background:#0b6e2f;color:#fff;border:0;border-radius:8px;cursor:pointer}
-  button:disabled{opacity:.6}
-  .card{background:#f6f8f6;border:1px solid #dde5dd;border-radius:10px;padding:14px;margin-top:16px}
-  .warn{background:#fff7e6;border-color:#f0d48a}
-  a{color:#0b6e2f} small{color:#666}
-  @media (prefers-color-scheme: dark){body{background:#111;color:#eee}.card{background:#1b201b;border-color:#333}}
+/* Hallmark · macrostructure: Long Document · theme: Newsprint · genre: editorial
+ * audience: citoyen beninois mobile · use: question -> reponse citee + export · tone: editorial
+ * pre-emit critique: P5 H4 E4 S5 R5 V4 */
+:root{
+  --color-paper: oklch(97% 0.012 85);
+  --color-paper-2: oklch(94% 0.016 85);
+  --color-ink: oklch(22% 0.02 70);
+  --color-ink-soft: oklch(42% 0.02 70);
+  --color-accent: oklch(46% 0.11 155);
+  --color-accent-ink: oklch(98% 0.01 85);
+  --color-warm: oklch(62% 0.13 65);
+  --color-line: oklch(82% 0.02 85);
+  --color-alert-bg: oklch(95% 0.05 80);
+  --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --font-body: Georgia, "Times New Roman", serif;
+  --font-ui: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-6: 24px; --space-8: 32px;
+}
+*{box-sizing:border-box}
+html,body{overflow-x:clip}
+body{margin:0;background:var(--color-paper);color:var(--color-ink);font-family:var(--font-body);line-height:1.6}
+.masthead{border-bottom:3px double var(--color-ink);padding:var(--space-6) var(--space-4) var(--space-4)}
+.masthead .rule{display:flex;justify-content:space-between;font-family:var(--font-ui);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--color-ink-soft)}
+h1{font-family:var(--font-display);font-style:normal;font-weight:700;font-size:clamp(2rem,7vw,3.2rem);line-height:1.05;margin:var(--space-3) 0 var(--space-2);overflow-wrap:anywhere;min-width:0}
+.lede{font-size:1.06rem;max-width:62ch;margin:0}
+.lede b{color:var(--color-accent)}
+.layout{max-width:1060px;margin:0 auto;padding:var(--space-6) var(--space-4);display:grid;grid-template-columns:300px minmax(0,1fr);gap:var(--space-8)}
+@media (max-width:768px){.layout{grid-template-columns:minmax(0,1fr)}}
+.fiche{border:1px solid var(--color-ink);padding:var(--space-4);background:var(--color-paper-2);align-self:start}
+.fiche h2{font-family:var(--font-ui);font-style:normal;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;margin:0 0 var(--space-3)}
+label{display:block;font-family:var(--font-ui);font-size:.82rem;font-weight:600;margin:var(--space-4) 0 var(--space-1)}
+input,select,textarea{width:100%;padding:10px;font-family:var(--font-ui);font-size:1rem;color:var(--color-ink);background:var(--color-paper);border:1px solid var(--color-ink-soft);border-radius:2px}
+input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--color-accent);outline-offset:1px}
+.btn{margin-top:var(--space-6);width:100%;padding:14px 12px;font-family:var(--font-ui);font-size:1rem;font-weight:700;background:var(--color-accent);color:var(--color-accent-ink);border:1px solid var(--color-accent);border-radius:2px;cursor:pointer;white-space:nowrap}
+.btn:hover{background:oklch(40% 0.11 155)}
+.btn:focus-visible{outline:2px solid var(--color-ink);outline-offset:2px}
+.btn:active{transform:translateY(1px)}
+.btn:disabled{opacity:.55;cursor:wait}
+article h2{font-family:var(--font-display);font-style:normal;font-size:1.5rem;border-bottom:1px solid var(--color-line);padding-bottom:var(--space-1);margin:var(--space-8) 0 var(--space-3)}
+article h2:first-child{margin-top:0}
+article ul{padding-left:1.2em}
+article li{margin:.45em 0}
+.cite{font-family:var(--font-ui);font-size:.85em;background:var(--color-paper-2);border:1px solid var(--color-line);padding:0 .35em;white-space:nowrap}
+.src{font-family:var(--font-ui);font-size:.9rem}
+.src a{color:var(--color-accent)}
+.alert{background:var(--color-alert-bg);border-left:4px solid var(--color-warm);padding:var(--space-4);margin-top:var(--space-6)}
+.alert h2{border:0;margin-top:0}
+.notice{font-size:.88rem;color:var(--color-ink-soft);border-top:1px solid var(--color-line);margin-top:var(--space-8);padding-top:var(--space-3)}
+.export{background:var(--color-ink);border-color:var(--color-ink);color:var(--color-paper)}
+.export:hover{background:oklch(30% 0.02 70)}
+.empty{color:var(--color-ink-soft);font-size:1.02rem}
 </style>
 </head>
 <body>
-<h1>JuriAgent — droit foncier au Bénin</h1>
-<p class="sub">Expliquez votre situation. L'assistant répond uniquement à partir des textes officiels (code foncier 2013 consolidé, décrets 2015), avec les articles cités. <b>Anonyme : aucun compte, rien n'est conservé.</b> Il explique la loi, il ne juge pas.</p>
+<header class="masthead">
+  <div class="rule"><span>République du Bénin · Textes officiels</span><span>Anonyme — sans compte</span></div>
+  <h1>Votre terrain, vos droits, les textes à l'appui.</h1>
+  <p class="lede">Décrivez votre situation. JuriAgent répond <b>uniquement à partir du code foncier consolidé et des décrets officiels</b>, article par article. Il explique la loi — il ne juge pas, et quand les textes ne suffisent pas, il vous oriente vers l'ANDF, la mairie ou un avocat.</p>
+</header>
 
-<label>Type de situation</label>
-<select id="type">
-  <option value="">— Choisir —</option>
-  <option value="heritage">Héritage</option>
-  <option value="titre">Preuve de propriété / titre foncier</option>
-  <option value="expropriation">Expropriation par l'État</option>
-  <option value="expulsion">Expulsion</option>
-  <option value="partage">Partage de terrain</option>
-</select>
+<main class="layout">
+  <form class="fiche" id="form">
+    <h2>Votre situation</h2>
+    <label for="type">Type de situation</label>
+    <select id="type">
+      <option value="">— Choisir —</option>
+      <option value="heritage">Héritage</option>
+      <option value="titre">Preuve de propriété / titre foncier</option>
+      <option value="expropriation">Expropriation par l'État</option>
+      <option value="expulsion">Expulsion</option>
+      <option value="partage">Partage de terrain</option>
+    </select>
+    <label for="commune">Commune</label>
+    <input id="commune" placeholder="Ex : Abomey-Calavi" autocomplete="off">
+    <label for="documents">Documents déjà en votre possession</label>
+    <input id="documents" placeholder="Ex : certificat foncier rural…" autocomplete="off">
+    <label for="adversaire">L'autre partie</label>
+    <select id="adversaire">
+      <option value="">—</option>
+      <option value="particulier">Un particulier / la famille</option>
+      <option value="Etat">L'État / une administration</option>
+    </select>
+    <label for="question">Votre question</label>
+    <textarea id="question" rows="5" placeholder="Ex : Mon père est décédé, comment partager son terrain entre nous ?"></textarea>
+    <button class="btn" id="go" type="submit">Lire les textes pour moi</button>
+  </form>
 
-<label>Commune</label>
-<input id="commune" placeholder="Ex : Abomey-Calavi">
-
-<label>Documents que vous avez déjà</label>
-<input id="documents" placeholder="Ex : certificat foncier rural, attestation de détention coutumière…">
-
-<label>Qui est l'autre partie ?</label>
-<select id="adversaire">
-  <option value="">—</option><option value="particulier">Un particulier / la famille</option><option value="Etat">L'État / une administration</option>
-</select>
-
-<label>Votre question</label>
-<textarea id="question" rows="4" placeholder="Ex : Mon père est décédé, comment partager son terrain entre nous ?"></textarea>
-
-<button id="go">Comprendre ma situation</button>
-<div id="out"></div>
+  <article id="out"><p class="empty">Votre réponse apparaîtra ici, avec les articles cités et le lien vers la source officielle de chaque texte.</p></article>
+</main>
 
 <script>
 const $=id=>document.getElementById(id);
 let last=null;
-$('go').onclick=async()=>{
+$('form').addEventListener('submit',async e=>{
+  e.preventDefault();
   const body={question:$('question').value,type:$('type').value,commune:$('commune').value,documents:$('documents').value,adversaire:$('adversaire').value};
-  if(!body.question.trim()){alert('Écrivez votre question');return}
-  $('go').disabled=true;$('go').textContent='Recherche dans les textes officiels…';$('out').innerHTML='';
+  if(!body.question.trim()){$('question').focus();return}
+  const btn=$('go'); btn.disabled=true; btn.textContent='Lecture des textes officiels…';
+  $('out').innerHTML='<p class="empty">Recherche dans le code foncier et les décrets… (environ 20 secondes)</p>';
   try{
     const r=await fetch('/api/ask',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+    if(!r.ok) throw new Error(r.status);
     const d=await r.json(); last={question:body.question,situation:body,reponse:d};
     $('out').innerHTML=render(d);
-  }catch(e){$('out').innerHTML='<div class="card warn">Service indisponible, réessayez.</div>'}
-  $('go').disabled=false;$('go').textContent='Comprendre ma situation';
-};
-function esc(s){return (s||'').replace(/</g,'&lt;')}
+  }catch(err){$('out').innerHTML='<div class="alert"><h2>Service indisponible</h2><p>Réessayez dans un instant.</p></div>'}
+  btn.disabled=false; btn.textContent='Lire les textes pour moi';
+});
+function esc(s){return (s||'').toString().replace(/</g,'&lt;')}
+function cite(t){return esc(t).replace(/\[Article\s+([0-9]+[a-z]*)\]/gi,'<span class="cite">Article $1</span>')}
 function render(d){
-  if(d.abstention) return `<div class="card warn"><h3>Je ne peux pas répondre à partir des textes disponibles</h3><p>${esc(d.orientation||'')}</p></div>`;
-  const li=a=>(a||[]).map(x=>`<li>${esc(x.texte||x)}</li>`).join('');
-  const src=(d.sources||[]).map(s=>`<li>Article ${esc(s.article)} (${esc(s.statut||'')}) — <a href="${esc(s.lien||'#')}" target="_blank">source officielle</a></li>`).join('');
+  if(d.abstention) return `<div class="alert"><h2>Les textes disponibles ne permettent pas de répondre</h2><p>${esc(d.orientation||'')}</p></div>`;
+  const li=a=>(a||[]).map(x=>`<li>${cite(x.texte||x)}</li>`).join('');
+  const src=(d.sources||[]).map(s=>`<li class="src">Article ${esc(s.article)} (${esc(s.statut||'')}) — <a href="${esc(s.lien||'#')}" target="_blank" rel="noopener">source officielle</a></li>`).join('');
   const warn=(d.delais_signales||[]).map(x=>`<li>${esc(x)}</li>`).join('');
-  return `<div class="card"><h3>Ce que dit la loi</h3><ul>${li(d.loi)}</ul>
-  <h3>En mots simples</h3><p>${esc(d.simple)}</p>
-  <h3>Démarches à faire</h3><ul>${li(d.demarches)}</ul>
-  <h3>Pièces à réunir</h3><ul>${li(d.pieces)}</ul>
-  ${warn?`<h3>⚠ Délais à vérifier</h3><ul>${warn}</ul>`:''}
-  <h3>Sources</h3><ul>${src}</ul>
-  <p><small>${esc(d.limite||'')}</small></p>
-  <button onclick="exporter()">📁 Exporter mon dossier (à apporter au rendez-vous)</button></div>`;
+  return `<h2>Ce que dit la loi</h2><ul>${li(d.loi)}</ul>
+  <h2>En mots simples</h2><p>${esc(d.simple)}</p>
+  <h2>Démarches à faire</h2><ul>${li(d.demarches)}</ul>
+  <h2>Pièces à réunir</h2><ul>${li(d.pieces)}</ul>
+  ${warn?`<div class="alert"><h2>Délais à vérifier</h2><ul>${warn}</ul></div>`:''}
+  <h2>Sources</h2><ul>${src}</ul>
+  <p class="notice">${esc(d.limite||'')}</p>
+  <button class="btn export" onclick="exporter()">Exporter mon dossier à apporter au rendez-vous</button>`;
 }
 async function exporter(){
   const r=await fetch('/api/export',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(last)});
