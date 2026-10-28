@@ -57,15 +57,38 @@ def expand_queries(client, question: str, situation: dict) -> list[str]:
         return [question]
 
 
-def retrieve(searcher: Searcher, queries: list[str], top_k: int = 8) -> list[dict]:
+def retrieve(searcher: Searcher, queries: list[str], top_k: int = 8, client=None, question: str = "") -> list[dict]:
     seen, out = set(), []
     for q in queries:
-        for r in searcher.search(q, top_k=4):
+        for r in searcher.search(q, top_k=6):
             if r["id"] not in seen:
                 seen.add(r["id"])
                 full = next(x for x in searcher.rows if x["id"] == r["id"])
                 out.append(full)
+    out = out[:18]
+    if client is not None and len(out) > top_k:
+        out = rerank(client, question, out, top_k)
     return out[:top_k]
+
+
+def rerank(client, question: str, passages: list[dict], top_k: int) -> list[dict]:
+    """Re-classement par Muse Spark (modele Meta): aucun modele tiers a l'execution."""
+    listing = "\n".join(f"{i}. [Article {p['article']}] {p['texte'][:250]}" for i, p in enumerate(passages))
+    prompt = (
+        "Classe ces passages du code foncier beninois du plus pertinent au moins pertinent "
+        f"pour la question: {question}\nReponds en JSON: {{\"ordre\": [indices]}}.\n\n{listing}"
+    )
+    try:
+        r = client.chat.completions.create(model="muse-spark-1.3",
+                                           messages=[{"role": "user", "content": prompt}],
+                                           max_tokens=1500, temperature=0)
+        m = re.search(r"\{.*\}", r.choices[0].message.content or "", re.DOTALL)
+        order = json.loads(m.group(0)).get("ordre", []) if m else []
+        picked = [passages[i] for i in order if isinstance(i, int) and 0 <= i < len(passages)]
+        rest = [p for p in passages if p not in picked]
+        return (picked + rest)[:top_k]
+    except Exception:
+        return passages[:top_k]
 
 
 def draft(client, question: str, situation: dict, passages: list[dict]) -> dict:
@@ -74,7 +97,7 @@ def draft(client, question: str, situation: dict, passages: list[dict]) -> dict:
         for p in passages)
     prompt = (
         "Tu es un assistant d'information sur le droit foncier du Benin. Tu expliques, tu ne juges pas: "
-        "jamais de verdict, jamais de strategie. Chaque affirmation de la section 'loi' doit citer "
+        "jamais de verdict, jamais de strategie. Mets \"abstention\": true UNIQUEMENT si aucun passage ne concerne le sujet de la question. Chaque affirmation de la section 'loi' doit citer "
         "[Article X] present dans les passages. Si les passages ne permettent pas de repondre, mets "
         "\"abstention\": true. Reponds UNIQUEMENT en JSON:\n"
         "{\"abstention\": false, \"loi\": [{\"texte\": \"... [Article X]\"}], \"simple\": \"...\", "
@@ -92,10 +115,12 @@ def run(question: str, situation: dict, searcher: Searcher | None = None) -> dic
     if searcher is None:
         searcher = Searcher(use_semantic=True)
     queries = expand_queries(client, question, situation)
-    passages = retrieve(searcher, queries)
+    passages = retrieve(searcher, queries, client=client, question=question)
     if not passages:
         return {"abstention": True, "raison": "aucun passage pertinent", "orientation": ORIENTATION}
     ans = draft(client, question, situation, passages)
+    if ans.get("abstention"):
+        ans = draft(client, question, situation, passages)  # relance unique: abstentions intermittentes observees
     if ans.get("abstention"):
         return {"abstention": True, "orientation": ORIENTATION,
                 "sources": [p["article"] for p in passages]}

@@ -84,7 +84,7 @@ Assistant **anonyme**, **sourcé uniquement sur les textes officiels béninois**
 `pypdf 6.20`, `pymupdf` (rendu pages pour OCR), `rank-bm25`, `sentence-transformers 6.2.0` (+ torch et dependances), `fastapi`, `uvicorn[standard]`, `python-dotenv`, `openai` (deja present via workshop). Liste figee: `requirements.txt`.
 (`pdfminer.six` a ete installe pour un test comparatif d'extraction — non utilise par le code.)
 
-**Modele open-weight telecharge (HuggingFace, ~458 Mo):**
+**Modele open-weight telecharge PUIS RETIRE le 28/10 (regle hackathon: tout modele a l execution doit etre Meta):**
 `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` dans `C:\Users\Kimsh\.cache\huggingface`
 Role: embeddings locaux de la recherche semantique. Suppression possible (`Remove-Item` du dossier cache) -> la recherche repasse en BM25 seul automatiquement. Telechargement automatique au 1er lancement de `src/search/search.py`.
 

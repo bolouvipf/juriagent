@@ -41,7 +41,12 @@ eval/              # 20 questions §10
 
 ## Modèles Meta
 
-Rédaction & Vérificateur : `muse-spark-1.3` via `https://api.meta.ai/v1` (clé `LLM_...` — voir `.env.example`). Voix optionnelle : transcription Meta.
+**Tous les modèles appelés à l'exécution sont des modèles Meta** (règle du hackathon vérifiée le 28/10/2026) : OCR des PDF scannés, reformulation des questions, re-classement des passages, rédaction et vérification séparée — `muse-spark-1.3` via `https://api.meta.ai/v1` (clé `LLM_...` — voir `.env.example`). La recherche lexicale est BM25 (algorithme, pas un modèle). *Historique : un modèle d'embeddings HuggingFace non-Meta a été testé puis retiré du projet le 28/10 pour conformité.*
+
+## Logiciels open source et données publiques
+
+- Logiciels : FastAPI, Uvicorn, rank-bm25, pypdf, PyMuPDF, OpenAI SDK (client compatible API Meta) — licences respectées, voir `requirements.txt`.
+- Données publiques : textes officiels béninois téléchargés sur le site du Secrétariat Général du Gouvernement (sgg.gouv.bj) et listés dans `corpus/manifest.json` avec leur source. Aucune donnée sans droits n'est incluse (LEGIS et textes.justice.bj exclus).
 
 ## Évaluation (honnête, §10)
 
@@ -49,9 +54,9 @@ Rédaction & Vérificateur : `muse-spark-1.3` via `https://api.meta.ai/v1` (clé
 
 **Résultats mesurés (28 oct. 2026, modèles Muse Spark (redaction + verification separee)) :**
 - Abstention conforme : **18/20** (les 2 écarts sont des sur-abstentions : H2, P3 — l'agent refuse par prudence)
-- Citations valides : **14/14 réponses** (chaque `[Article X]` existe dans les passages retrouvés)
+- Citations valides : **18/18 réponses** (chaque `[Article X]` existe dans les passages retrouvés)
 - Verdicts interdits : **0/20**
-- Latence moyenne : ~21 s/question (3 appels modèles + recherche hybride)
+- Latence moyenne : ~30 s/question (reformulation + re-classement + rédaction + vérification, tous Muse Spark)
 
 Limites connues : la qualité dépend de l'OCR Muse des PDF scannés ; le corpus couvre le code foncier consolidé et 6 décrets de 2015, pas toute la jurisprudence. Ne pas extrapoler au-delà de cet échantillon de 20 questions.
 

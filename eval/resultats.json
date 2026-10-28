@@ -2,9 +2,9 @@
   "resume": {
     "total": 20,
     "abstention_conforme": "18/20",
-    "citations_valides": "14/14 reponses",
+    "citations_valides": "18/18 reponses",
     "verdicts_interdits": 0,
-    "latence_moyenne_s": 20.7
+    "latence_moyenne_s": 29.6
   },
   "details": [
     {
@@ -16,25 +16,32 @@
       "citations": [
         "8",
         "10",
-        "183",
-        "183"
+        "180",
+        "180"
       ],
       "citations_ok": true,
       "verdict_interdit": false,
-      "nb_affirmations": 4,
-      "secondes": 27.9
+      "nb_affirmations": 3,
+      "secondes": 46.5
     },
     {
       "id": "H2",
       "categorie": "heritage",
-      "abstention": true,
+      "abstention": false,
       "abstention_attendue": false,
-      "abstention_ok": false,
-      "citations": [],
+      "abstention_ok": true,
+      "citations": [
+        "8",
+        "112",
+        "360",
+        "166",
+        "166",
+        "138"
+      ],
       "citations_ok": true,
       "verdict_interdit": false,
-      "nb_affirmations": 0,
-      "secondes": 12.6
+      "nb_affirmations": 6,
+      "secondes": 31.9
     },
     {
       "id": "H3",
@@ -44,13 +51,13 @@
       "abstention_ok": true,
       "citations": [
         "8",
-        "10",
-        "115"
+        "180",
+        "180"
       ],
       "citations_ok": true,
       "verdict_interdit": false,
       "nb_affirmations": 3,
-      "secondes": 23.4
+      "secondes": 24.7
     },
     {
       "id": "P1",
@@ -62,16 +69,17 @@
         "4",
         "4",
         "4",
-        "459",
+        "138",
         "138",
         "145",
         "138",
-        "175"
+        "203",
+        "459"
       ],
       "citations_ok": true,
       "verdict_interdit": false,
-      "nb_affirmations": 8,
-      "secondes": 21.8
+      "nb_affirmations": 9,
+      "secondes": 25.9
     },
     {
       "id": "P2",
@@ -80,28 +88,34 @@
       "abstention_attendue": false,
       "abstention_ok": true,
       "citations": [
+        "376",
         "112",
-        "112",
-        "138",
-        "138",
-        "4"
+        "375",
+        "4",
+        "378",
+        "138"
       ],
       "citations_ok": true,
       "verdict_interdit": false,
-      "nb_affirmations": 5,
-      "secondes": 20.4
+      "nb_affirmations": 6,
+      "secondes": 23.0
     },
     {
       "id": "P3",
       "categorie": "preuve",
-      "abstention": true,
+      "abstention": false,
       "abstention_attendue": false,
-      "abstention_ok": false,
-      "citations": [],
+      "abstention_ok": true,
+      "citations": [
+        "4",
+        "4",
+        "376",
+        "352"
+      ],
       "citations_ok": true,
       "verdict_interdit": false,
-      "nb_affirmations": 0,
-      "secondes": 28.1
+      "nb_affirmations": 4,
+      "secondes": 24.6
     },
     {
       "id": "P4",
@@ -110,18 +124,19 @@
       "abstention_attendue": false,
       "abstention_ok": true,
       "citations": [
+        "378",
         "4",
         "4",
+        "192",
+        "195",
         "378",
         "378",
-        "378",
-        "2",
         "30"
       ],
       "citations_ok": true,
       "verdict_interdit": false,
-      "nb_affirmations": 7,
-      "secondes": 24.1
+      "nb_affirmations": 8,
+      "secondes": 26.4
     },
     {
       "id": "E1",
@@ -130,15 +145,18 @@
       "abstention_attendue": false,
       "abstention_ok": true,
       "citations": [
-        "210",
+        "215",
+        "43",
         "211",
         "216",
-        "217"
+        "217",
+        "210",
+        "9"
       ],
       "citations_ok": true,
       "verdict_interdit": false,
-      "nb_affirmations": 4,
-      "secondes": 21.3
+      "nb_affirmations": 7,
+      "secondes": 27.3
     },
     {
       "id": "E2",
@@ -147,17 +165,23 @@
       "abstention_attendue": false,
       "abstention_ok": true,
       "citations": [
+        "43",
         "211",
-        "242",
+        "210",
         "216",
+        "217",
+        "238",
+        "213",
+        "216",
+        "211",
         "238",
         "217",
-        "422"
+        "238"
       ],
       "citations_ok": true,
       "verdict_interdit": false,
-      "nb_affirmations": 6,
-      "secondes": 24.4
+      "nb_affirmations": 7,
+      "secondes": 25.1
     },
     {
       "id": "X1",
@@ -166,21 +190,17 @@
       "abstention_attendue": false,
       "abstention_ok": true,
       "citations": [
+        "523",
         "524",
-        "524",
-        "527",
         "528",
-        "528",
-        "34",
-        "37",
-        "528",
-        "258",
-        "528"
+        "30",
+        "32",
+        "534"
       ],
       "citations_ok": true,
       "verdict_interdit": false,
-      "nb_affirmations": 7,
-      "secondes": 27.6
+      "nb_affirmations": 6,
+      "secondes": 30.7
     },
     {
       "id": "X2",
@@ -189,15 +209,18 @@
       "abstention_attendue": false,
       "abstention_ok": true,
       "citations": [
-        "523",
-        "524",
-        "524",
-        "527"
+        "354",
+        "354",
+        "65",
+        "527",
+        "533",
+        "531",
+        "534"
       ],
       "citations_ok": true,
       "verdict_interdit": false,
-      "nb_affirmations": 4,
-      "secondes": 23.0
+      "nb_affirmations": 7,
+      "secondes": 30.3
     },
     {
       "id": "S1",
@@ -206,17 +229,21 @@
       "abstention_attendue": false,
       "abstention_ok": true,
       "citations": [
+        "3",
         "16",
         "16",
-        "188",
+        "3",
+        "11",
+        "11",
+        "21",
         "16",
-        "16",
-        "21"
+        "187",
+        "144"
       ],
       "citations_ok": true,
       "verdict_interdit": false,
-      "nb_affirmations": 6,
-      "secondes": 18.4
+      "nb_affirmations": 10,
+      "secondes": 30.8
     },
     {
       "id": "S2",
@@ -225,18 +252,21 @@
       "abstention_attendue": false,
       "abstention_ok": true,
       "citations": [
-        "16",
-        "16",
-        "188",
+        "182",
+        "182",
+        "7",
+        "7",
         "6",
         "6",
         "16",
-        "16"
+        "16",
+        "21",
+        "21"
       ],
       "citations_ok": true,
       "verdict_interdit": false,
-      "nb_affirmations": 7,
-      "secondes": 26.0
+      "nb_affirmations": 10,
+      "secondes": 22.9
     },
     {
       "id": "S3",
@@ -245,17 +275,21 @@
       "abstention_attendue": false,
       "abstention_ok": true,
       "citations": [
+        "360",
+        "360",
+        "360",
         "361",
         "361",
         "361",
-        "361",
+        "355",
         "192",
-        "355"
+        "4",
+        "7"
       ],
       "citations_ok": true,
       "verdict_interdit": false,
-      "nb_affirmations": 6,
-      "secondes": 21.9
+      "nb_affirmations": 10,
+      "secondes": 25.1
     },
     {
       "id": "A1",
@@ -267,19 +301,23 @@
       "citations_ok": true,
       "verdict_interdit": false,
       "nb_affirmations": 0,
-      "secondes": 11.3
+      "secondes": 25.0
     },
     {
       "id": "A2",
       "categorie": "abstention",
-      "abstention": true,
+      "abstention": false,
       "abstention_attendue": true,
-      "abstention_ok": true,
-      "citations": [],
+      "abstention_ok": false,
+      "citations": [
+        "8",
+        "112",
+        "360"
+      ],
       "citations_ok": true,
       "verdict_interdit": false,
-      "nb_affirmations": 0,
-      "secondes": 12.2
+      "nb_affirmations": 3,
+      "secondes": 28.3
     },
     {
       "id": "A3",
@@ -291,19 +329,19 @@
       "citations_ok": true,
       "verdict_interdit": false,
       "nb_affirmations": 0,
-      "secondes": 10.2
+      "secondes": 20.0
     },
     {
       "id": "A4",
       "categorie": "abstention",
-      "abstention": true,
+      "abstention": false,
       "abstention_attendue": true,
-      "abstention_ok": true,
+      "abstention_ok": false,
       "citations": [],
       "citations_ok": true,
       "verdict_interdit": false,
       "nb_affirmations": 0,
-      "secondes": 10.5
+      "secondes": 38.6
     },
     {
       "id": "D1",
@@ -313,14 +351,19 @@
       "abstention_ok": true,
       "citations": [
         "30",
-        "34",
-        "37",
-        "30"
+        "29",
+        "32",
+        "32",
+        "32",
+        "32",
+        "38",
+        "38",
+        "2"
       ],
       "citations_ok": true,
       "verdict_interdit": false,
-      "nb_affirmations": 3,
-      "secondes": 21.0
+      "nb_affirmations": 9,
+      "secondes": 54.4
     },
     {
       "id": "D2",
@@ -331,19 +374,13 @@
       "citations": [
         "1er",
         "1er",
-        "1er",
-        "33",
-        "33",
-        "6",
-        "19",
-        "209",
-        "13",
-        "70"
+        "4",
+        "304"
       ],
       "citations_ok": true,
       "verdict_interdit": false,
-      "nb_affirmations": 10,
-      "secondes": 27.5
+      "nb_affirmations": 4,
+      "secondes": 30.0
     }
   ]
 }

@@ -33,7 +33,11 @@ def normalize(text: str) -> list[str]:
 
 
 class Searcher:
-    def __init__(self, corpus: Path = CORPUS, use_semantic: bool = True):
+    """BM25 uniquement. Aucun modele non-Meta a l'execution (regle hackathon):
+    la pertinence semantique est assuree en amont par la reformulation Muse
+    et en aval par le re-classement Muse dans l'agent."""
+
+    def __init__(self, corpus: Path = CORPUS, use_semantic: bool = False):
         self.rows = [json.loads(l) for l in corpus.read_text(encoding="utf-8").splitlines() if l.strip()]
         for extra in CORPUS_EXTRA:
             if extra.exists():
@@ -43,27 +47,6 @@ class Searcher:
         self.bm25 = BM25Okapi(self.tokens)
         self.embeddings = None
         self.model = None
-        if use_semantic:
-            self._load_semantic()
-
-    def _load_semantic(self):
-        INDEX_DIR.mkdir(parents=True, exist_ok=True)
-        cache = INDEX_DIR / "embeddings.npy"
-        try:
-            import numpy as np
-            from sentence_transformers import SentenceTransformer
-            self.model = SentenceTransformer(EMB_MODEL)
-            if cache.exists():
-                self.embeddings = np.load(cache)
-                if len(self.embeddings) != len(self.rows):
-                    self.embeddings = None
-            if self.embeddings is None:
-                texts = [r["texte"][:2000] for r in self.rows]
-                self.embeddings = self.model.encode(texts, normalize_embeddings=True, show_progress_bar=False)
-                np.save(cache, self.embeddings)
-        except Exception as e:
-            print(f"semantique indisponible ({e.__class__.__name__}), BM25 seul", file=sys.stderr)
-            self.embeddings = None
 
     def search(self, query: str, top_k: int = 5, statut: str | None = None, modifie: bool = False) -> list[dict]:
         import numpy as np
