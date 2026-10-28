@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JuriAgent — Comprendre votre situation foncière (Bénin)</title>
+<style>
+  body{font-family:system-ui,sans-serif;max-width:720px;margin:0 auto;padding:16px;line-height:1.5;color:#1a1a1a}
+  h1{font-size:1.4rem} .sub{color:#555;font-size:.95rem}
+  label{display:block;margin:14px 0 4px;font-weight:600}
+  input,select,textarea{width:100%;padding:10px;font-size:1rem;border:1px solid #bbb;border-radius:8px;box-sizing:border-box}
+  button{margin-top:16px;width:100%;padding:14px;font-size:1.05rem;background:#0b6e2f;color:#fff;border:0;border-radius:8px;cursor:pointer}
+  button:disabled{opacity:.6}
+  .card{background:#f6f8f6;border:1px solid #dde5dd;border-radius:10px;padding:14px;margin-top:16px}
+  .warn{background:#fff7e6;border-color:#f0d48a}
+  a{color:#0b6e2f} small{color:#666}
+  @media (prefers-color-scheme: dark){body{background:#111;color:#eee}.card{background:#1b201b;border-color:#333}}
+</style>
+</head>
+<body>
+<h1>JuriAgent — droit foncier au Bénin</h1>
+<p class="sub">Expliquez votre situation. L'assistant répond uniquement à partir des textes officiels (code foncier 2013 consolidé, décrets 2015), avec les articles cités. <b>Anonyme : aucun compte, rien n'est conservé.</b> Il explique la loi, il ne juge pas.</p>
+
+<label>Type de situation</label>
+<select id="type">
+  <option value="">— Choisir —</option>
+  <option value="heritage">Héritage</option>
+  <option value="titre">Preuve de propriété / titre foncier</option>
+  <option value="expropriation">Expropriation par l'État</option>
+  <option value="expulsion">Expulsion</option>
+  <option value="partage">Partage de terrain</option>
+</select>
+
+<label>Commune</label>
+<input id="commune" placeholder="Ex : Abomey-Calavi">
+
+<label>Documents que vous avez déjà</label>
+<input id="documents" placeholder="Ex : certificat foncier rural, attestation de détention coutumière…">
+
+<label>Qui est l'autre partie ?</label>
+<select id="adversaire">
+  <option value="">—</option><option value="particulier">Un particulier / la famille</option><option value="Etat">L'État / une administration</option>
+</select>
+
+<label>Votre question</label>
+<textarea id="question" rows="4" placeholder="Ex : Mon père est décédé, comment partager son terrain entre nous ?"></textarea>
+
+<button id="go">Comprendre ma situation</button>
+<div id="out"></div>
+
+<script>
+const $=id=>document.getElementById(id);
+let last=null;
+$('go').onclick=async()=>{
+  const body={question:$('question').value,type:$('type').value,commune:$('commune').value,documents:$('documents').value,adversaire:$('adversaire').value};
+  if(!body.question.trim()){alert('Écrivez votre question');return}
+  $('go').disabled=true;$('go').textContent='Recherche dans les textes officiels…';$('out').innerHTML='';
+  try{
+    const r=await fetch('/api/ask',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+    const d=await r.json(); last={question:body.question,situation:body,reponse:d};
+    $('out').innerHTML=render(d);
+  }catch(e){$('out').innerHTML='<div class="card warn">Service indisponible, réessayez.</div>'}
+  $('go').disabled=false;$('go').textContent='Comprendre ma situation';
+};
+function esc(s){return (s||'').replace(/</g,'&lt;')}
+function render(d){
+  if(d.abstention) return `<div class="card warn"><h3>Je ne peux pas répondre à partir des textes disponibles</h3><p>${esc(d.orientation||'')}</p></div>`;
+  const li=a=>(a||[]).map(x=>`<li>${esc(x.texte||x)}</li>`).join('');
+  const src=(d.sources||[]).map(s=>`<li>Article ${esc(s.article)} (${esc(s.statut||'')}) — <a href="${esc(s.lien||'#')}" target="_blank">source officielle</a></li>`).join('');
+  const warn=(d.delais_signales||[]).map(x=>`<li>${esc(x)}</li>`).join('');
+  return `<div class="card"><h3>Ce que dit la loi</h3><ul>${li(d.loi)}</ul>
+  <h3>En mots simples</h3><p>${esc(d.simple)}</p>
+  <h3>Démarches à faire</h3><ul>${li(d.demarches)}</ul>
+  <h3>Pièces à réunir</h3><ul>${li(d.pieces)}</ul>
+  ${warn?`<h3>⚠ Délais à vérifier</h3><ul>${warn}</ul>`:''}
+  <h3>Sources</h3><ul>${src}</ul>
+  <p><small>${esc(d.limite||'')}</small></p>
+  <button onclick="exporter()">📁 Exporter mon dossier (à apporter au rendez-vous)</button></div>`;
+}
+async function exporter(){
+  const r=await fetch('/api/export',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(last)});
+  const blob=await r.blob(); const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob); a.download='dossier-juriagent.md'; a.click();
+}
+</script>
+</body>
+</html>

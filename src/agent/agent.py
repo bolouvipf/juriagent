@@ -87,9 +87,10 @@ def draft(client, question: str, situation: dict, passages: list[dict]) -> dict:
     return json.loads(m.group(0)) if m else {"abstention": True}
 
 
-def run(question: str, situation: dict) -> dict:
+def run(question: str, situation: dict, searcher: Searcher | None = None) -> dict:
     client = load_client()
-    searcher = Searcher(use_semantic=True)
+    if searcher is None:
+        searcher = Searcher(use_semantic=True)
     queries = expand_queries(client, question, situation)
     passages = retrieve(searcher, queries)
     if not passages:
