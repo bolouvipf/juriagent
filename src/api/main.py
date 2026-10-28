@@ -80,6 +80,10 @@ def export(req: Export):
         lines += [f"- {x}" for x in r.get("demarches", [])]
         lines += ["", "## Pieces a apporter"]
         lines += [f"- {x}" for x in r.get("pieces", [])]
+        if r.get("contacts"):
+            lines += ["", "## Qui contacter"]
+            for c in r["contacts"]:
+                lines.append(f"- **{c['qui']}** — {c['role']}. A demander : {c['demander']} ({c['base']})")
         lines += ["", "## Questions a poser lors du rendez-vous",
                   "- Quelles sont les prochaines etapes dans mon cas precis ?",
                   "- Quels delais s'appliquent a ma situation ?",

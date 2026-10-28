@@ -21,6 +21,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from search.search import Searcher          # noqa: E402
 from verifier.verifier import deterministic_filter, model_check, deadline_warnings  # noqa: E402
+from agent.contacts import contacts_for   # noqa: E402
 
 ORIENTATION = (
     "Pour une analyse de votre situation precise, adressez-vous a un avocat, "
@@ -124,7 +125,7 @@ def run(question: str, situation: dict, searcher: Searcher | None = None) -> dic
     if ans.get("abstention"):
         ans = draft(client, question, situation, passages)  # relance unique: abstentions intermittentes observees
     if ans.get("abstention"):
-        return {"abstention": True, "orientation": ORIENTATION,
+        return {"abstention": True, "orientation": ORIENTATION, "contacts": contacts_for(situation),
                 "sources": [p["article"] for p in passages]}
     claims = deterministic_filter(ans.get("loi", []), passages)
     claims = model_check(client, "muse-spark-1.3", claims, passages)
@@ -132,6 +133,7 @@ def run(question: str, situation: dict, searcher: Searcher | None = None) -> dic
         return {"abstention": True, "raison": "affirmations non appuyees par le corpus", "orientation": ORIENTATION}
     ans["loi"] = claims
     ans["delais_signales"] = deadline_warnings(passages)
+    ans["contacts"] = contacts_for(situation)
     ans["sources"] = [{"article": p["article"], "statut": p.get("statut"), "lien": p.get("lien_source")} for p in passages]
     ans["requetes"] = queries
     ans["limite"] = ("Cet assistant explique les textes; il ne peut pas dire qui a raison ni quelle strategie adopter. "

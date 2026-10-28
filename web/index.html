@@ -230,11 +230,13 @@ function renderAnswer(d, mode){
   const warn=(d.delais_signales||[]).length?`<div class="alert"><p><b>Attention aux délais</b></p><ul>${d.delais_signales.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:'';
   const src=(d.sources||[]).map(s=>`<li class="src">Article ${esc(s.article)} (${esc(s.statut||'')}) — <a href="${esc(s.lien||'#')}" target="_blank" rel="noopener">source officielle</a></li>`).join('');
   const preuves=`<details><summary>Textes et sources (pour votre avocat ou l'agent qui vous reçoit)</summary><ul>${lois}</ul><ul>${src}</ul></details>`;
+  const contacts=(d.contacts||[]).map(c=>`<li><b>${esc(c.qui)}</b> — ${esc(c.role)}<br><span style="color:var(--ink-soft)">À demander : ${esc(c.demander)} <span class="cite">${esc(c.base)}</span></span></li>`).join('');
+  const contactsBlock=contacts?`<h3>Qui contacter</h3><ul>${contacts}</ul>`:'';
   let main='';
   if(mode==='loi') main=loiBlock+faireBlock;
   else if(mode==='faire') main=faireBlock+preuves;
   else main=faireBlock+loiBlock+`<details><summary>Sources officielles</summary><ul>${src}</ul></details>`;
-  return `<p style="font-size:1.06rem">${esc(d.simple)}</p><div class="card">${main}</div>${warn}
+  return `<p style="font-size:1.06rem">${esc(d.simple)}</p><div class="card">${main}</div>${warn}${contactsBlock}
     <div class="actions"><button class="act" id="exportBtn" type="button">Exporter mon dossier</button></div>
     <p class="notice">${esc(d.limite||'')}</p>`;
 }
