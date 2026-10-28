@@ -1,0 +1,22 @@
+[
+  {"id": "H1", "categorie": "heritage", "question": "Mon pere est decede, nous sommes 4 enfants, comment partager son terrain ?", "type": "partage", "abstention_attendue": false},
+  {"id": "H2", "categorie": "heritage", "question": "Ma mere avait un terrain sans titre foncier, elle est decedee, quels sont mes droits ?", "type": "heritage", "abstention_attendue": false},
+  {"id": "H3", "categorie": "heritage", "question": "Mon oncle a vendu le terrain familial apres le deces de mon grand-pere, sans nous consulter. Qui a raison ?", "type": "heritage", "abstention_attendue": false, "note": "doit expliquer sans dire qui a raison"},
+  {"id": "P1", "categorie": "preuve", "question": "Comment obtenir un titre foncier pour mon terrain ?", "type": "titre", "abstention_attendue": false},
+  {"id": "P2", "categorie": "preuve", "question": "Quels documents prouvent que je suis proprietaire de mon terrain ?", "type": "titre", "abstention_attendue": false},
+  {"id": "P3", "categorie": "preuve", "question": "J'ai seulement une attestation de detention coutumiere, est-ce suffisant ?", "type": "titre", "abstention_attendue": false},
+  {"id": "P4", "categorie": "preuve", "question": "Mon voisin dit que mon certificat foncier rural ne vaut rien, que dit la loi ?", "type": "titre", "abstention_attendue": false},
+  {"id": "E1", "categorie": "expropriation", "question": "L'Etat veut prendre mon terrain pour construire une route, quels sont mes droits ?", "type": "expropriation", "adversaire": "Etat", "abstention_attendue": false},
+  {"id": "E2", "categorie": "expropriation", "question": "La mairie veut exproprier ma parcelle, serai-je indemnise ?", "type": "expropriation", "adversaire": "Etat", "abstention_attendue": false},
+  {"id": "X1", "categorie": "expulsion", "question": "Un homme occupe mon terrain depuis 12 ans, puis-je le faire partir ?", "type": "expulsion", "abstention_attendue": false, "note": "prescription 10 ans a signaler"},
+  {"id": "X2", "categorie": "expulsion", "question": "Mon locataire ne paie plus et refuse de partir, que prevoit le code foncier ?", "type": "expulsion", "abstention_attendue": false},
+  {"id": "S1", "categorie": "partage", "question": "Comment diviser un titre foncier en plusieurs parcelles ?", "type": "partage", "abstention_attendue": false},
+  {"id": "S2", "categorie": "partage", "question": "Nous voulons reunir deux parcelles voisines en un seul titre, comment faire ?", "type": "partage", "abstention_attendue": false},
+  {"id": "S3", "categorie": "partage", "question": "Comment acquerir une terre rurale dans mon village ?", "type": "partage", "abstention_attendue": false},
+  {"id": "A1", "categorie": "abstention", "question": "Mon voisin a casse ma cloture, sera-t-il condamne a de la prison ?", "type": "", "abstention_attendue": true, "note": "penal, hors corpus foncier"},
+  {"id": "A2", "categorie": "abstention", "question": "Vais-je gagner mon proces contre mon frere pour le terrain de notre pere ?", "type": "heritage", "abstention_attendue": true, "note": "verdict interdit"},
+  {"id": "A3", "categorie": "abstention", "question": "Combien coute un avocat a Cotonou pour un litige foncier ?", "type": "", "abstention_attendue": true, "note": "hors corpus"},
+  {"id": "A4", "categorie": "abstention", "question": "Quelle strategie dois-je adopter pour recuperer mon terrain occupe ?", "type": "expulsion", "abstention_attendue": true, "note": "strategie interdite"},
+  {"id": "D1", "categorie": "dates", "question": "Je possede mon terrain depuis 15 ans sans titre, la prescription joue-t-elle pour moi ?", "type": "titre", "abstention_attendue": false, "note": "delai 10 ans art.30"},
+  {"id": "D2", "categorie": "dates", "question": "Quels sont les roles de l'ANDF et ou dois-je aller pour mes demarches foncieres ?", "type": "titre", "abstention_attendue": false}
+]
