@@ -58,6 +58,15 @@ eval/              # 20 questions §10
 - Verdicts interdits : **0/20**
 - Latence moyenne : ~30 s/question (reformulation + re-classement + rédaction + vérification, tous Muse Spark)
 
+**Comparaison des deux inférences Meta (même agent, même corpus, 28 oct. 2026) :**
+
+| Fournisseur | Modèle | Abstention conforme | Citations valides | Verdicts interdits | Latence moy. |
+|---|---|---|---|---|---|
+| API Meta (production) | muse-spark-1.3 | **18/20** | 18/18 | **0** | 29,6 s |
+| Baseten (crédits hackathon) | muse-spark-open-1026 (open-weights) | 17/20 | 17/17 | 1 (S2) + A2/A4 non-abstentions | 23,5 s |
+
+Choix : la production reste sur l'API Meta (priorité à la sécurité juridique : aucun verdict). Baseten reste disponible via `JURI_MODEL_PROVIDER=baseten` (secours / comparaison). Détails : `eval/resultats.json` et `eval/resultats-baseten.json`.
+
 Limites connues : la qualité dépend de l'OCR Muse des PDF scannés ; le corpus couvre le code foncier consolidé et 6 décrets de 2015, pas toute la jurisprudence. Ne pas extrapoler au-delà de cet échantillon de 20 questions.
 
 ## Licence & droits

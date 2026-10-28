@@ -29,17 +29,41 @@ ORIENTATION = (
 )
 
 
-def load_client():
+MODEL = "muse-spark-1.3"
+
+
+def _env(name: str) -> str:
     import os
-    from openai import OpenAI
-    key = os.environ.get("META_API_KEY", "")
-    if not key and Path(".env").exists():
+    if os.environ.get(name):
+        return os.environ[name]
+    if Path(".env").exists():
         for line in Path(".env").read_text(encoding="utf-8-sig", errors="ignore").splitlines():
-            if line.startswith("META_API_KEY="):
-                key = line.split("=", 1)[1].strip()
+            if line.startswith(name + "="):
+                return line.split("=", 1)[1].strip()
+    return ""
+
+
+def load_client():
+    """Fournisseur d'inference Meta, au choix (JURI_MODEL_PROVIDER):
+    - meta    : Muse Spark via api.meta.ai (defaut)
+    - baseten : Muse Spark Open (open-weights Meta) via inference.baseten.co
+    """
+    global MODEL
+    from openai import OpenAI
+    provider = (_env("JURI_MODEL_PROVIDER") or "meta").lower()
+    if provider == "baseten":
+        key = _env("BASETEN_API_KEY")
+        if not key:
+            print("BASETEN_API_KEY manquante dans .env", file=sys.stderr)
+            sys.exit(2)
+        MODEL = _env("BASETEN_MODEL") or "meta-models/muse-spark-open-1026"
+        print(f"fournisseur: baseten ({MODEL})", file=sys.stderr)
+        return OpenAI(api_key=key, base_url="https://inference.baseten.co/v1")
+    key = _env("META_API_KEY")
     if not key:
         print("META_API_KEY manquante dans .env", file=sys.stderr)
         sys.exit(2)
+    MODEL = _env("META_MODEL") or "muse-spark-1.3"
     return OpenAI(api_key=key, base_url="https://api.meta.ai/v1")
 
 
@@ -51,7 +75,7 @@ def expand_queries(client, question: str, situation: dict) -> list[str]:
         f"Situation: {json.dumps(situation, ensure_ascii=False)}\nQuestion: {question}"
     )
     try:
-        r = client.chat.completions.create(model="muse-spark-1.3",
+        r = client.chat.completions.create(model=MODEL,
                                            messages=[{"role": "user", "content": prompt}], max_tokens=1500, temperature=0.2)
         m = re.search(r"\{.*\}", r.choices[0].message.content or "", re.DOTALL)
         qs = json.loads(m.group(0)).get("requetes", []) if m else []
@@ -82,7 +106,7 @@ def rerank(client, question: str, passages: list[dict], top_k: int) -> list[dict
         f"pour la question: {question}\nReponds en JSON: {{\"ordre\": [indices]}}.\n\n{listing}"
     )
     try:
-        r = client.chat.completions.create(model="muse-spark-1.3",
+        r = client.chat.completions.create(model=MODEL,
                                            messages=[{"role": "user", "content": prompt}],
                                            max_tokens=1500, temperature=0)
         m = re.search(r"\{.*\}", r.choices[0].message.content or "", re.DOTALL)
@@ -107,7 +131,7 @@ def draft(client, question: str, situation: dict, passages: list[dict]) -> dict:
         "\"demarches\": [\"...\"], \"pieces\": [\"...\"], \"delais\": [\"...\"], \"adresses\": [\"...\"]}\n\n"
         f"Situation: {json.dumps(situation, ensure_ascii=False)}\nQuestion: {question}\n\nPASSAGES:\n{corpus}"
     )
-    r = client.chat.completions.create(model="muse-spark-1.3",
+    r = client.chat.completions.create(model=MODEL,
                                        messages=[{"role": "user", "content": prompt}], max_tokens=6000, temperature=0.2)
     m = re.search(r"\{.*\}", r.choices[0].message.content or "", re.DOTALL)
     return json.loads(m.group(0)) if m else {"abstention": True}
@@ -128,7 +152,7 @@ def run(question: str, situation: dict, searcher: Searcher | None = None) -> dic
         return {"abstention": True, "orientation": ORIENTATION, "contacts": contacts_for(situation),
                 "sources": [p["article"] for p in passages]}
     claims = deterministic_filter(ans.get("loi", []), passages)
-    claims = model_check(client, "muse-spark-1.3", claims, passages)
+    claims = model_check(client, MODEL, claims, passages)
     if not claims:
         return {"abstention": True, "raison": "affirmations non appuyees par le corpus", "orientation": ORIENTATION}
     ans["loi"] = claims

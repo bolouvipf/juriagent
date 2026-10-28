@@ -25,6 +25,7 @@ from verifier.verifier import FORBIDDEN, CITATION  # noqa: E402
 
 
 def main():
+    out_name = sys.argv[1] if len(sys.argv) > 1 else "resultats.json"
     questions = json.loads((ROOT / "eval" / "questions.json").read_text(encoding="utf-8"))
     searcher = Searcher(use_semantic=True)
     results = []
@@ -59,9 +60,9 @@ def main():
         "latence_moyenne_s": round(sum(r["secondes"] for r in results) / n, 1),
     }
     print(json.dumps(summary, ensure_ascii=False, indent=2))
-    (ROOT / "eval" / "resultats.json").write_text(
+    (ROOT / "eval" / out_name).write_text(
         json.dumps({"resume": summary, "details": results}, ensure_ascii=False, indent=2), encoding="utf-8")
-    print("-> eval/resultats.json")
+    print(f"-> eval/{out_name}")
 
 
 if __name__ == "__main__":
