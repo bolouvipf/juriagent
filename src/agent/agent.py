@@ -132,7 +132,9 @@ def run(question: str, situation: dict, searcher: Searcher | None = None) -> dic
     ans["delais_signales"] = deadline_warnings(passages)
     ans["sources"] = [{"article": p["article"], "statut": p.get("statut"), "lien": p.get("lien_source")} for p in passages]
     ans["requetes"] = queries
-    ans["limite"] = "Cet assistant explique les textes; il ne peut pas dire qui a raison ni quelle strategie adopter. " + ORIENTATION
+    ans["limite"] = ("Cet assistant explique les textes; il ne peut pas dire qui a raison ni quelle strategie adopter. "
+                      "Ne partagez pas d'informations personnelles identifiantes (noms complets, numeros d'identite, de telephone ou de titres). "
+                      + ORIENTATION)
     return ans
 
 

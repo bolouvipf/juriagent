@@ -108,6 +108,7 @@ summary{font-weight:700;cursor:pointer;font-size:.94rem}
     <section class="hero" id="hero">
       <h1>Votre terrain,<br>vos droits, <em>expliqués simplement.</em></h1>
       <p>Décrivez votre problème — héritage, titre foncier, expropriation, occupation. Je cherche dans le code foncier officiel, je vous dis quoi faire, et je vous prépare pour votre rendez-vous. Anonyme, sans compte.</p>
+      <p style="border:1px solid var(--warm);border-radius:12px;padding:10px 14px;background:var(--alert)"><b>Protégez vos informations :</b> ne donnez jamais vos noms complets, numéros de pièce d'identité ou de téléphone, ni les numéros exacts de vos titres ou parcelles. Décrivez votre situation en termes généraux (« mon père », « un terrain à Cotonou ») — cela suffit pour vous répondre.</p>
       <div class="scenarios">
         <button class="scenario" type="button" data-q="Mon père est décédé, nous sommes plusieurs enfants, comment partager son terrain ?"><b>Partager un héritage</b><span>Mon père est décédé, comment partager son terrain ?</span></button>
         <button class="scenario" type="button" data-q="Comment obtenir un titre foncier pour mon terrain ?"><b>Obtenir un titre foncier</b><span>Quels papiers prouvent que le terrain est à moi ?</span></button>
@@ -142,7 +143,7 @@ summary{font-weight:700;cursor:pointer;font-size:.94rem}
       <textarea id="input" rows="1" placeholder="Décrivez votre problème…"></textarea>
       <button class="send" id="send" type="submit" aria-label="Envoyer">↑</button>
     </div>
-    <p class="hint">JuriAgent explique les textes officiels. Il ne remplace ni un avocat, ni l'ANDF.</p>
+    <p class="hint">JuriAgent explique les textes officiels. Il ne remplace ni un avocat, ni l'ANDF. Ne partagez pas d'informations personnelles identifiantes ici.</p>
   </form>
 </div>
 
@@ -181,7 +182,7 @@ $('composer').addEventListener('submit', async e=>{
   userSay(text);
   if(state.stage==='probleme'){
     state.probleme=text; state.stage='choix';
-    const body=botSay(`<p>Si je comprends bien : « ${esc(text)} »</p><p><b>Que voulez-vous savoir ?</b></p>
+    const body=botSay(`<p>Si je comprends bien : « ${esc(text)} »</p><p style="color:var(--ink-soft)">Petit rappel : restez général — pas de noms complets, de numéros d'identité, de téléphone ni de numéros de titres.</p><p><b>Que voulez-vous savoir ?</b></p>
       <div class="choices">
         <button class="choice" data-mode="loi" type="button">Ce que dit la loi</button>
         <button class="choice" data-mode="faire" type="button">Quoi faire concrètement</button>

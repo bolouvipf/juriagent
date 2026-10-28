@@ -62,6 +62,9 @@ def ask(req: Ask):
 def export(req: Export):
     r = req.reponse
     lines = ["# Dossier JuriAgent — a apporter a votre rendez-vous", "",
+             "**Confidentialite :** ce dossier est genere a partir de ce que vous avez decrit. "
+             "N'y ajoutez pas de numeros de piece d'identite ou de titre avant de le partager; "
+             "montrez les originaux uniquement a l'avocat ou a l'agent qui vous recoit.", "",
              f"**Votre question :** {req.question}", "",
              "**Votre situation (telle que decrite) :**"]
     for k, v in req.situation.items():
