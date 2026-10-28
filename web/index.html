@@ -3,197 +3,238 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>JuriAgent — Comprendre votre situation foncière (Bénin)</title>
+<title>JuriAgent — Votre assistant foncier (Bénin)</title>
 <style>
-/* Hallmark · macrostructure: Long Document · theme: Newsprint · genre: editorial
- * flux conversationnel: probleme -> choix (loi / quoi faire / les deux) -> reponse verifiee -> suivi
- * memoire: navigateur uniquement (aucun stockage serveur) · pre-emit critique: P5 H4 E4 S5 R5 V4 */
+/* Hallmark · theme: Newsprint revisite chat-agent · genre: editorial doux
+ * audience: citoyen mobile · use: discuter -> reponse verifiee -> dossier
+ * pre-emit critique: P4 H5 E4 S5 R4 V5 */
 :root{
-  --color-paper: oklch(97% 0.012 85);
-  --color-paper-2: oklch(94% 0.016 85);
-  --color-ink: oklch(22% 0.02 70);
-  --color-ink-soft: oklch(42% 0.02 70);
-  --color-accent: oklch(46% 0.11 155);
-  --color-accent-ink: oklch(98% 0.01 85);
-  --color-warm: oklch(62% 0.13 65);
-  --color-line: oklch(82% 0.02 85);
-  --color-alert-bg: oklch(95% 0.05 80);
-  --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
-  --font-body: Georgia, "Times New Roman", serif;
-  --font-ui: system-ui, -apple-system, "Segoe UI", sans-serif;
-  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-6: 24px; --space-8: 32px;
+  --paper: oklch(97% 0.012 85);
+  --paper-2: oklch(94.5% 0.016 85);
+  --ink: oklch(23% 0.02 70);
+  --ink-soft: oklch(45% 0.02 70);
+  --accent: oklch(46% 0.11 155);
+  --accent-deep: oklch(38% 0.11 155);
+  --accent-ink: oklch(99% 0.005 85);
+  --warm: oklch(62% 0.13 65);
+  --line: oklch(86% 0.018 85);
+  --alert: oklch(95% 0.05 80);
+  --display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --ui: system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 *{box-sizing:border-box}
-html,body{overflow-x:clip}
-body{margin:0;background:var(--color-paper);color:var(--color-ink);font-family:var(--font-body);line-height:1.6}
-.masthead{border-bottom:3px double var(--color-ink);padding:var(--space-6) var(--space-4) var(--space-4)}
-.masthead .rule{display:flex;justify-content:space-between;gap:var(--space-3);flex-wrap:wrap;font-family:var(--font-ui);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--color-ink-soft)}
-h1{font-family:var(--font-display);font-style:normal;font-weight:700;font-size:clamp(1.9rem,6vw,3rem);line-height:1.05;margin:var(--space-3) 0 var(--space-2);overflow-wrap:anywhere;min-width:0}
-.lede{font-size:1.02rem;max-width:62ch;margin:0}
-.lede b{color:var(--color-accent)}
-.layout{max-width:1060px;margin:0 auto;padding:var(--space-6) var(--space-4);display:grid;grid-template-columns:280px minmax(0,1fr);gap:var(--space-8)}
-@media (max-width:768px){.layout{grid-template-columns:minmax(0,1fr)}}
-.fiche{border:1px solid var(--color-ink);padding:var(--space-4);background:var(--color-paper-2);align-self:start}
-.fiche h2{font-family:var(--font-ui);font-style:normal;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;margin:0 0 var(--space-3)}
-label{display:block;font-family:var(--font-ui);font-size:.82rem;font-weight:600;margin:var(--space-4) 0 var(--space-1)}
-input,select,textarea{width:100%;padding:10px;font-family:var(--font-ui);font-size:1rem;color:var(--color-ink);background:var(--color-paper);border:1px solid var(--color-ink-soft);border-radius:2px}
-input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--color-accent);outline-offset:1px}
-.btn{padding:12px 16px;font-family:var(--font-ui);font-size:1rem;font-weight:700;background:var(--color-accent);color:var(--color-accent-ink);border:1px solid var(--color-accent);border-radius:2px;cursor:pointer;white-space:nowrap}
-.btn:hover{background:oklch(40% 0.11 155)}
-.btn:focus-visible{outline:2px solid var(--color-ink);outline-offset:2px}
-.btn:active{transform:translateY(1px)}
-.btn:disabled{opacity:.55;cursor:wait}
-.export{background:var(--color-ink);border-color:var(--color-ink);color:var(--color-paper);width:100%;margin-top:var(--space-4)}
-.export:hover{background:oklch(30% 0.02 70)}
-#thread{display:flex;flex-direction:column;gap:var(--space-4)}
-.msg{max-width:92%;padding:var(--space-3) var(--space-4);border:1px solid var(--color-line);background:var(--color-paper-2)}
-.msg.bot{align-self:flex-start;border-left:4px solid var(--color-accent)}
-.msg.user{align-self:flex-end;background:var(--color-ink);color:var(--color-paper);border-color:var(--color-ink)}
-.msg p{margin:.2em 0}
-.msg h3{font-family:var(--font-display);font-style:normal;margin:var(--space-4) 0 var(--space-2)}
-.msg h3:first-child{margin-top:0}
-.msg ul,.msg ol{padding-left:1.2em}
-.msg li{margin:.4em 0}
-.choices{display:flex;flex-wrap:wrap;gap:var(--space-2);margin-top:var(--space-3)}
-.choice{font-family:var(--font-ui);font-weight:700;padding:10px 12px;border:1px solid var(--color-accent);color:var(--color-accent);background:var(--color-paper);cursor:pointer}
-.choice:hover{background:var(--color-accent);color:var(--color-accent-ink)}
-.choice:focus-visible{outline:2px solid var(--color-ink);outline-offset:2px}
-.cite{font-family:var(--font-ui);font-size:.85em;background:var(--color-paper);border:1px solid var(--color-line);padding:0 .35em;white-space:nowrap}
-.src{font-family:var(--font-ui);font-size:.9rem}
-.src a{color:var(--color-accent)}
-.alert{background:var(--color-alert-bg);border-left:4px solid var(--color-warm)}
-.notice{font-size:.88rem;color:var(--color-ink-soft)}
-details{border:1px solid var(--color-line);padding:var(--space-3) var(--space-4);margin-top:var(--space-4);background:var(--color-paper)}
-summary{font-family:var(--font-ui);font-weight:700;cursor:pointer}
+html,body{overflow-x:clip;height:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--ui);line-height:1.55;display:flex;flex-direction:column;height:100dvh}
+header{display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid var(--line);background:var(--paper)}
+.seal{width:38px;height:38px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:1.15rem;flex:none}
+header .who{line-height:1.25}
+header .who b{font-size:1.02rem}
+header .who span{display:block;font-size:.78rem;color:var(--ink-soft)}
+header .badge{margin-left:auto;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-deep);border:1px solid var(--accent);border-radius:999px;padding:5px 10px;white-space:nowrap}
+main{flex:1;overflow-y:auto;scroll-behavior:smooth}
+.wrap{max-width:780px;margin:0 auto;padding:28px 18px 20px;min-height:100%;display:flex;flex-direction:column}
+.hero{margin:auto 0;text-align:left;padding:24px 0}
+.hero h1{font-family:var(--display);font-style:normal;font-size:clamp(2rem,6vw,3.1rem);line-height:1.08;margin:0 0 12px;font-weight:700}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{color:var(--ink-soft);font-size:1.05rem;max-width:56ch;margin:0 0 26px}
+.scenarios{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.scenarios{grid-template-columns:minmax(0,1fr)}}
+.scenario{text-align:left;border:1px solid var(--line);background:var(--paper-2);border-radius:16px;padding:16px;cursor:pointer;font-family:var(--ui);transition:border-color .15s, transform .15s}
+.scenario:hover{border-color:var(--accent);transform:translateY(-1px)}
+.scenario:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.scenario b{display:block;font-size:.98rem;margin-bottom:4px;color:var(--ink)}
+.scenario span{font-size:.86rem;color:var(--ink-soft)}
+#thread{display:flex;flex-direction:column;gap:22px}
+.msg-user{align-self:flex-end;max-width:85%;background:var(--ink);color:var(--paper);border-radius:20px 20px 6px 20px;padding:11px 16px}
+.msg-user p{margin:0}
+.row{display:flex;gap:12px;align-items:flex-start}
+.avatar{width:32px;height:32px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;flex:none;margin-top:2px}
+.bot-body{flex:1;min-width:0}
+.bot-body>p:first-child{margin-top:4px}
+.bot-body h3{font-family:var(--display);font-style:normal;font-size:1.18rem;margin:22px 0 8px}
+.bot-body h3:first-child{margin-top:2px}
+.bot-body ul,.bot-body ol{padding-left:1.15em}
+.bot-body li{margin:.42em 0}
+.choices{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.choice{font-family:var(--ui);font-weight:700;font-size:.92rem;padding:10px 14px;border-radius:999px;border:1px solid var(--accent);color:var(--accent-deep);background:var(--paper);cursor:pointer}
+.choice:hover{background:var(--accent);color:var(--accent-ink)}
+.choice:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.cite{font-family:var(--ui);font-size:.84em;background:var(--paper-2);border:1px solid var(--line);border-radius:6px;padding:0 .35em;white-space:nowrap}
+.card{border:1px solid var(--line);border-radius:18px;padding:6px 18px 14px;background:var(--paper-2);margin-top:14px}
+details{border:1px solid var(--line);border-radius:14px;padding:10px 14px;margin-top:14px}
+summary{font-weight:700;cursor:pointer;font-size:.94rem}
+.src{font-size:.9rem}
+.src a{color:var(--accent-deep)}
+.alert{background:var(--alert);border-left:4px solid var(--warm);border-radius:12px;padding:12px 16px}
+.notice{font-size:.86rem;color:var(--ink-soft);margin-top:14px}
 .steps{counter-reset:step;list-style:none;padding:0}
 .steps li{counter-increment:step;position:relative;padding:2px 0 2px 42px}
-.steps li::before{content:counter(step);position:absolute;left:0;top:2px;width:28px;height:28px;border-radius:50%;background:var(--color-accent);color:var(--color-accent-ink);font-family:var(--font-ui);font-weight:700;display:flex;align-items:center;justify-content:center}
+.steps li::before{content:counter(step);position:absolute;left:0;top:1px;width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:.9rem;display:flex;align-items:center;justify-content:center}
 .check{list-style:none;padding:0}
-.check label{font-family:var(--font-body);font-weight:400;font-size:1rem;display:flex;gap:var(--space-2);align-items:flex-start;cursor:pointer;margin:0}
-.check input{width:auto;margin-top:5px;accent-color:var(--color-accent)}
-.composer{display:flex;gap:var(--space-2);margin-top:var(--space-6)}
-.composer textarea{flex:1;resize:vertical;min-height:52px}
-.typing{color:var(--color-ink-soft);font-family:var(--font-ui);font-size:.9rem}
+.check label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.check input{width:auto;margin-top:5px;accent-color:var(--accent)}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.act{font-family:var(--ui);font-weight:700;font-size:.9rem;padding:10px 14px;border-radius:999px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer}
+.act.ghost{background:transparent;color:var(--ink)}
+.act:hover{opacity:.88}
+.act:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.progress{display:flex;flex-direction:column;gap:7px;font-size:.92rem;color:var(--ink-soft)}
+.progress .on{color:var(--ink);font-weight:600}
+.progress .done{color:var(--accent-deep)}
+.composer-zone{border-top:1px solid var(--line);background:var(--paper);padding:12px 18px calc(12px + env(safe-area-inset-bottom))}
+.composer{max-width:780px;margin:0 auto}
+.situation{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.situation select,.situation input{font-family:var(--ui);font-size:.86rem;padding:8px 10px;border:1px solid var(--line);border-radius:999px;background:var(--paper-2);color:var(--ink);max-width:210px}
+.bar{display:flex;gap:10px;align-items:flex-end;border:1px solid var(--line);border-radius:26px;padding:8px 8px 8px 18px;background:var(--paper-2);box-shadow:0 6px 24px oklch(23% 0.02 70 / .07)}
+.bar:focus-within{border-color:var(--accent)}
+.bar textarea{flex:1;border:0;background:transparent;resize:none;font-family:var(--ui);font-size:1rem;line-height:1.45;max-height:130px;padding:8px 0;color:var(--ink)}
+.bar textarea:focus{outline:none}
+.send{width:42px;height:42px;border-radius:50%;border:0;background:var(--accent);color:var(--accent-ink);font-size:1.15rem;cursor:pointer;flex:none}
+.send:hover{background:var(--accent-deep)}
+.send:disabled{opacity:.5;cursor:wait}
+.send:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.hint{font-size:.78rem;color:var(--ink-soft);text-align:center;margin:9px 0 0}
 </style>
 </head>
 <body>
-<header class="masthead">
-  <div class="rule"><span>République du Bénin · Textes officiels</span><span>Anonyme — rien n'est conservé</span></div>
-  <h1>Expliquez votre problème de terrain.</h1>
-  <p class="lede">JuriAgent discute avec vous, puis répond <b>uniquement à partir du code foncier consolidé et des décrets officiels</b>. Il explique — il ne juge pas. La discussion reste dans votre navigateur.</p>
+<header>
+  <div class="seal">J</div>
+  <div class="who"><b>JuriAgent</b><span>Assistant foncier du Bénin — il explique, il ne juge pas</span></div>
+  <div class="badge">Textes officiels</div>
 </header>
 
-<main class="layout">
-  <form class="fiche" id="fiche">
-    <h2>Votre situation (optionnel)</h2>
-    <label for="type">Type de situation</label>
-    <select id="type">
-      <option value="">— Choisir —</option>
-      <option value="heritage">Héritage</option>
-      <option value="titre">Preuve de propriété / titre foncier</option>
-      <option value="expropriation">Expropriation par l'État</option>
-      <option value="expulsion">Expulsion</option>
-      <option value="partage">Partage de terrain</option>
-    </select>
-    <label for="commune">Commune</label>
-    <input id="commune" placeholder="Ex : Abomey-Calavi" autocomplete="off">
-    <label for="documents">Documents déjà en votre possession</label>
-    <input id="documents" placeholder="Ex : certificat foncier rural…" autocomplete="off">
-    <label for="adversaire">L'autre partie</label>
-    <select id="adversaire">
-      <option value="">—</option>
-      <option value="particulier">Un particulier / la famille</option>
-      <option value="Etat">L'État / une administration</option>
-    </select>
-  </form>
-
-  <section>
+<main id="main">
+  <div class="wrap">
+    <section class="hero" id="hero">
+      <h1>Votre terrain,<br>vos droits, <em>expliqués simplement.</em></h1>
+      <p>Décrivez votre problème — héritage, titre foncier, expropriation, occupation. Je cherche dans le code foncier officiel, je vous dis quoi faire, et je vous prépare pour votre rendez-vous. Anonyme, sans compte.</p>
+      <div class="scenarios">
+        <button class="scenario" type="button" data-q="Mon père est décédé, nous sommes plusieurs enfants, comment partager son terrain ?"><b>Partager un héritage</b><span>Mon père est décédé, comment partager son terrain ?</span></button>
+        <button class="scenario" type="button" data-q="Comment obtenir un titre foncier pour mon terrain ?"><b>Obtenir un titre foncier</b><span>Quels papiers prouvent que le terrain est à moi ?</span></button>
+        <button class="scenario" type="button" data-q="L'État veut prendre mon terrain pour un projet public, quels sont mes droits ?"><b>L'État veut mon terrain</b><span>Expropriation : quels sont mes droits ?</span></button>
+        <button class="scenario" type="button" data-q="Un homme occupe mon terrain depuis 12 ans, que prévoit la loi ?"><b>Terrain occupé</b><span>Quelqu'un occupe mon terrain depuis 12 ans</span></button>
+      </div>
+    </section>
     <div id="thread" aria-live="polite"></div>
-    <form class="composer" id="composer">
-      <textarea id="input" rows="2" placeholder="Décrivez votre problème…"></textarea>
-      <button class="btn" id="send" type="submit">Envoyer</button>
-    </form>
-  </section>
+  </div>
 </main>
+
+<div class="composer-zone">
+  <form class="composer" id="composer">
+    <div class="situation">
+      <select id="type" aria-label="Type de situation">
+        <option value="">Situation…</option>
+        <option value="heritage">Héritage</option>
+        <option value="titre">Titre foncier</option>
+        <option value="expropriation">Expropriation</option>
+        <option value="expulsion">Expulsion</option>
+        <option value="partage">Partage</option>
+      </select>
+      <input id="commune" placeholder="Commune (ex : Cotonou)" aria-label="Commune">
+      <input id="documents" placeholder="Documents que vous avez…" aria-label="Documents">
+      <select id="adversaire" aria-label="Autre partie">
+        <option value="">Autre partie…</option>
+        <option value="particulier">Un particulier / la famille</option>
+        <option value="Etat">L'État / l'administration</option>
+      </select>
+    </div>
+    <div class="bar">
+      <textarea id="input" rows="1" placeholder="Décrivez votre problème…"></textarea>
+      <button class="send" id="send" type="submit" aria-label="Envoyer">↑</button>
+    </div>
+    <p class="hint">JuriAgent explique les textes officiels. Il ne remplace ni un avocat, ni l'ANDF.</p>
+  </form>
+</div>
 
 <script>
 const $=id=>document.getElementById(id);
-const thread=$('thread');
+const thread=$('thread'), mainEl=$('main'), input=$('input');
 let state={stage:'probleme', probleme:'', mode:'deux', busy:false};
 let lastExport=null;
 
 function esc(s){return (s||'').toString().replace(/</g,'&lt;')}
 function cite(t){return esc(t).replace(/\[Article\s+([0-9]+[a-z]*)\]/gi,'<span class="cite">Article $1</span>')}
-function addMsg(html, who='bot'){
-  const d=document.createElement('div'); d.className='msg '+who; d.innerHTML=html;
-  thread.appendChild(d); d.scrollIntoView({behavior:'smooth',block:'end'}); return d;
+function scrollDown(){ mainEl.scrollTo({top:mainEl.scrollHeight,behavior:'smooth'}); }
+function situation(){ return {type:$('type').value, commune:$('commune').value, documents:$('documents').value, adversaire:$('adversaire').value}; }
+
+function userSay(text){
+  const d=document.createElement('div'); d.className='msg-user'; d.innerHTML='<p>'+esc(text)+'</p>';
+  thread.appendChild(d); scrollDown();
 }
-function botSay(html){ return addMsg(html,'bot'); }
-function userSay(text){ return addMsg('<p>'+esc(text)+'</p>','user'); }
-function situation(){
-  return {type:$('type').value, commune:$('commune').value, documents:$('documents').value, adversaire:$('adversaire').value};
+function botSay(html){
+  const row=document.createElement('div'); row.className='row';
+  row.innerHTML='<div class="avatar">J</div><div class="bot-body">'+html+'</div>';
+  thread.appendChild(row); scrollDown(); return row.querySelector('.bot-body');
 }
 
-botSay("<p>Bonjour. Expliquez-moi votre problème de terrain, avec vos mots — par exemple un héritage, un titre à obtenir, l'État qui veut votre parcelle, quelqu'un qui occupe votre terrain.</p><p>Si vous le savez, remplissez aussi la fiche à gauche : cela m'aide à chercher les bons articles.</p>");
+document.querySelectorAll('.scenario').forEach(b=>b.onclick=()=>{ input.value=b.dataset.q; $('composer').requestSubmit(); });
+input.addEventListener('input',()=>{ input.style.height='auto'; input.style.height=Math.min(input.scrollHeight,130)+'px'; });
+input.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); $('composer').requestSubmit(); } });
 
 $('composer').addEventListener('submit', async e=>{
   e.preventDefault();
   if(state.busy) return;
-  const text=$('input').value.trim();
+  const text=input.value.trim();
   if(!text) return;
-  $('input').value='';
+  input.value=''; input.style.height='auto';
+  document.getElementById('hero').style.display='none';
   userSay(text);
   if(state.stage==='probleme'){
     state.probleme=text; state.stage='choix';
-    botSay(`<p>Si je comprends bien : « ${esc(text)} »</p><p><b>Que voulez-vous savoir ?</b></p>
+    const body=botSay(`<p>Si je comprends bien : « ${esc(text)} »</p><p><b>Que voulez-vous savoir ?</b></p>
       <div class="choices">
-        <button class="choice" data-mode="loi">Ce que dit la loi</button>
-        <button class="choice" data-mode="faire">Quoi faire concrètement</button>
-        <button class="choice" data-mode="deux">Les deux</button>
+        <button class="choice" data-mode="loi" type="button">Ce que dit la loi</button>
+        <button class="choice" data-mode="faire" type="button">Quoi faire concrètement</button>
+        <button class="choice" data-mode="deux" type="button">Les deux</button>
       </div>`);
-    thread.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{ state.mode=b.dataset.mode; ask(state.probleme); });
+    body.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{ state.mode=b.dataset.mode; ask(state.probleme); });
   } else {
     ask(text);
   }
 });
 
+const STEPS=['Recherche dans le code foncier et les décrets…','Rédaction de votre réponse…','Vérification de chaque affirmation…'];
 async function ask(question){
   state.busy=true; $('send').disabled=true;
-  const wait=botSay('<p class="typing">Je lis les textes officiels… (environ 30 secondes — recherche, rédaction, puis vérification)</p>');
+  const body=botSay('<div class="progress">'+STEPS.map((s,i)=>`<span data-step="${i}">○ ${s}</span>`).join('')+'</div>');
+  const spans=body.querySelectorAll('[data-step]');
+  let step=0; spans[0].classList.add('on'); spans[0].textContent='● '+STEPS[0];
+  const timer=setInterval(()=>{ if(step<2){ spans[step].classList.remove('on'); spans[step].classList.add('done'); spans[step].textContent='● '+STEPS[step].replace('…',' — fait'); step++; spans[step].classList.add('on'); spans[step].textContent='● '+STEPS[step]; } }, 9000);
   try{
-    const body={question, ...situation()};
-    const r=await fetch('/api/ask',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+    const r=await fetch('/api/ask',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question, ...situation()})});
     if(!r.ok) throw new Error(r.status);
     const d=await r.json();
     lastExport={question, situation:situation(), reponse:d};
-    wait.innerHTML=renderAnswer(d, state.mode);
-    botSay("<p>Vous pouvez me poser une autre question sur votre situation — par exemple sur une pièce, un délai ou une démarche. Chaque réponse est revérifiée dans les textes.</p>");
+    clearInterval(timer);
+    body.innerHTML=renderAnswer(d, state.mode);
+    const ex=body.querySelector('#exportBtn'); if(ex) ex.onclick=exporter;
+    botSay("<p>Vous pouvez me poser une autre question sur votre situation — une pièce, un délai, une démarche. Chaque réponse est revérifiée dans les textes.</p>");
     state.stage='suivi';
   }catch(err){
-    wait.innerHTML='<p>Service indisponible, réessayez dans un instant.</p>';
+    clearInterval(timer);
+    body.innerHTML='<div class="alert"><p><b>Service indisponible</b> — réessayez dans un instant.</p></div>';
   }
-  state.busy=false; $('send').disabled=false;
-  const ex=document.getElementById('exportBtn'); if(ex) ex.onclick=exporter;
+  state.busy=false; $('send').disabled=false; scrollDown();
 }
 
 function renderAnswer(d, mode){
   if(d.abstention){
-    return `<div class="alert" style="padding:12px"><p><b>Les textes disponibles ne permettent pas de répondre.</b></p><p>${esc(d.orientation||'')}</p><p>Je peux expliquer les textes, mais pas dire qui a raison ni quelle stratégie adopter.</p></div>`;
+    return `<div class="alert"><p><b>Les textes disponibles ne permettent pas de répondre.</b></p><p>${esc(d.orientation||'')}</p><p>Je peux expliquer les textes, mais pas dire qui a raison ni quelle stratégie adopter.</p></div>`;
   }
   const lois=(d.loi||[]).map(x=>`<li>${cite(x.texte||x)}</li>`).join('');
   const loiBlock=`<h3>Ce que dit la loi</h3><ul>${lois}</ul>`;
   const steps=(d.demarches||[]).map(x=>`<li>${cite(x.texte||x)}</li>`).join('');
-  const pieces=(d.pieces||[]).map((x,i)=>`<li><label><input type="checkbox"><span>${cite(x.texte||x)}</span></label></li>`).join('');
+  const pieces=(d.pieces||[]).map(x=>`<li><label><input type="checkbox"><span>${cite(x.texte||x)}</span></label></li>`).join('');
   const faireBlock=`<h3>Quoi faire, dans l'ordre</h3><ol class="steps">${steps}</ol><h3>Pièces à réunir — cochez au fur et à mesure</h3><ul class="check">${pieces}</ul>`;
-  const warn=(d.delais_signales||[]).length?`<div class="alert" style="padding:12px"><p><b>Attention aux délais</b></p><ul>${d.delais_signales.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:'';
+  const warn=(d.delais_signales||[]).length?`<div class="alert"><p><b>Attention aux délais</b></p><ul>${d.delais_signales.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:'';
   const src=(d.sources||[]).map(s=>`<li class="src">Article ${esc(s.article)} (${esc(s.statut||'')}) — <a href="${esc(s.lien||'#')}" target="_blank" rel="noopener">source officielle</a></li>`).join('');
   const preuves=`<details><summary>Textes et sources (pour votre avocat ou l'agent qui vous reçoit)</summary><ul>${lois}</ul><ul>${src}</ul></details>`;
   let main='';
   if(mode==='loi') main=loiBlock+faireBlock;
   else if(mode==='faire') main=faireBlock+preuves;
   else main=faireBlock+loiBlock+`<details><summary>Sources officielles</summary><ul>${src}</ul></details>`;
-  return `<h3>Votre situation, en clair</h3><p>${esc(d.simple)}</p>${main}${warn}
-    <button class="btn export" id="exportBtn" type="button">Exporter mon dossier à apporter au rendez-vous</button>
+  return `<p style="font-size:1.06rem">${esc(d.simple)}</p><div class="card">${main}</div>${warn}
+    <div class="actions"><button class="act" id="exportBtn" type="button">Exporter mon dossier</button></div>
     <p class="notice">${esc(d.limite||'')}</p>`;
 }
 
