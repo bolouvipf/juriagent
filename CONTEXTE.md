@@ -56,7 +56,7 @@ Assistant **anonyme**, **sourcé uniquement sur les textes officiels béninois**
 - **Langues locales** : hors périmètre (mentionner en piste future)
 
 ## 8. Plan 7 jours (§9) — état
-- J1-J2 : corpus + ingestion/recherche → **en cours (commit 1 fait, commit 2/3 à faire)**
+- J1-J2 : corpus + OCR Muse (144p) + ingestion + **consolidation 2013+2017 = 544 articles** → **fait (commits d96bbcf..80bf77b)**
 - J3 : agent questions + réponse format fixe
 - J4 : vérificateur + dates + test 20 questions
 - J5 : interface + export + voix
