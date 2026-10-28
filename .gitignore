@@ -15,3 +15,6 @@ data/index/
 # OS
 .DS_Store
 Thumbs.db
+
+# cache OCR par page (reconstruit depuis les .txt assembles)
+corpus/ocr/*/

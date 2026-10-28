@@ -132,7 +132,8 @@ def main():
     if source.is_file():
         files = [source]
     elif source.is_dir():
-        files = sorted([p for p in source.rglob("*") if p.suffix.lower() in (".pdf", ".txt", ".md") and p.is_file()])
+        files = sorted([p for p in source.rglob("*") if p.suffix.lower() in (".pdf", ".txt", ".md") and p.is_file()
+                        and not re.match(r"page-\d+\.txt$", p.name)])  # exclure le cache OCR par page
     else:
         print(f"source introuvable: {source}", file=sys.stderr)
         sys.exit(2)
