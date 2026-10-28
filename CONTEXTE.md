@@ -74,13 +74,15 @@ Assistant **anonyme**, **sourcé uniquement sur les textes officiels béninois**
 - WSL Ubuntu avec `python3.14-venv` installé, `legal-agent-workshop` passé en CRLF→LF, helper Windows `helper.ps1` créé (portage natif, plus besoin de WSL)
 - **Choix validé** : tu as dit d'utiliser mon plan et de ne pas attendre vérification des lois ("c'est publique"), commits incrémentaux
 
-## 11. Prochaines étapes (reprise)
-1. Commit 2 : `src/ingest/ingest.py` (déjà prévu)
-2. Commit 3 : téléchargement 2013-01 + 2017-15 depuis sgg.gouv.bj → `data/ingested/articles.jsonl` + `corpus/consolidated/`
-3. Commit 4 : `src/search/` hybride
-4. Commit 5 : `src/agent/` + `src/verifier/` (Muse)
-5. Ensuite web/eval/vidéo
+## 11. Prochaines etapes (reprise)
+1. Tourner la video 3 min (docs/DEMO.md), serveur: python src/api/main.py
+2. Optionnel: corriger les sur-abstentions H2/P3, voix (transcription Meta)
+3. Soumission Cerebral Valley avant le 3 nov au soir (repo deja public et pousse)
 
+## 12. Resultats mesures (eval/run_eval.py, 28 oct 2026)
+- 20 questions: abstention conforme 18/20, citations valides 14/14, verdicts interdits 0, latence ~21 s
+- Corpus: 544 articles loi consolidee + 192 articles decrets = 736 entrees
+- Pipeline: OCR Muse Spark vision -> consolidation -> recherche hybride BM25+MiniLM -> redaction Spark -> verification Wonder + filtres deterministes
 ## 12. Commandes utiles
 ```bash
 # env
