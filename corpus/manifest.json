@@ -1,0 +1,46 @@
+[
+  {
+    "id": "loi-2013-01",
+    "title": "Loi n° 2013-01 du 14 août 2013 portant code foncier et domanial",
+    "role": "texte de base",
+    "date_adoption": "2013-08-14",
+    "source_url": "https://sgg.gouv.bj/doc/loi-2013-01.pdf",
+    "local_path": "corpus/raw/loi-2013-01.pdf",
+    "statut_droits": "À récupérer sur source officielle ; conditions d'usage à vérifier",
+    "notes": "Texte de base — sera consolidé avec 2017-15"
+  },
+  {
+    "id": "loi-2017-15",
+    "title": "Loi n° 2017-15 du 10 août 2017 modifiant et complétant la loi 2013-01",
+    "role": "loi modificative (articles changés uniquement)",
+    "date_adoption": "2017-08-10",
+    "source_url": "https://sgg.gouv.bj/doc/loi-2017-15.pdf",
+    "local_path": "corpus/raw/loi-2017-15.pdf",
+    "statut_droits": "Disponible sur sgg.gouv.bj ; mentions légales à lire",
+    "notes": "Ne jamais utiliser seule — intégrer dans le consolidé"
+  },
+  {
+    "id": "decrets-2015",
+    "title": "Décrets d'application 2015 (007, 010, 014, 018, 015, 029)",
+    "role": "procédures concrètes",
+    "date_adoption": "2015",
+    "source_url": "https://sgg.gouv.bj/",
+    "local_path": "corpus/raw/decrets-2015/",
+    "statut_droits": "Disponibles sur sgg.gouv.bj ; mentions légales à lire",
+    "notes": "À identifier précisément (007 Conseil consultatif foncier, 010 ANDF, 014 mise en valeur, 018 PFR)"
+  },
+  {
+    "id": "legis",
+    "title": "LEGIS (legis.cdij.bj) — base ministère Justice",
+    "role": "non collecté",
+    "statut_droits": "Reproduction interdite sans accord écrit ; autorisation demandée 28/10/2026 en attente",
+    "notes": "Ne pas scraper"
+  },
+  {
+    "id": "textes-justice",
+    "title": "textes.justice.bj",
+    "role": "non collecté",
+    "statut_droits": "Accès automatisé refusé — ne pas collecter",
+    "notes": ""
+  }
+]

@@ -1,0 +1,17 @@
+# env & secrets
+.env
+*.key
+
+# python
+__pycache__/
+*.pyc
+.venv/
+data/ingested/
+data/index/
+
+# corpus raw (à récupérer via script, non versionné si PDF lourds — on versionne manifest + consolidated txt)
+# corpus/raw/*.pdf
+
+# OS
+.DS_Store
+Thumbs.db
