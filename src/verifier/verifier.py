@@ -4,7 +4,7 @@ Verificateur JuriAgent: controle deterministe + modele.
 
 1. Deterministe: chaque citation [Article X] existe dans les passages fournis;
    phrases interdites (verdict/strategie) supprimees par regex.
-2. Modele (Muse Wonder): chaque affirmation est-elle appuyee par un passage cite?
+2. Modele (Muse Spark, appel separe): chaque affirmation est-elle appuyee par un passage cite?
    Retourne les indices soutenus; le reste est retire (abstention partielle).
 """
 import json
@@ -47,7 +47,7 @@ def model_check(client, model: str, claims: list[dict], passages: list[dict]) ->
         r = client.chat.completions.create(
             model=model,
             messages=[{"role": "user", "content": prompt}],
-            max_tokens=2500, temperature=0,
+            max_tokens=6000, temperature=0,
         )
         raw = r.choices[0].message.content or "{}"
         m = re.search(r"\{.*\}", raw, re.DOTALL)

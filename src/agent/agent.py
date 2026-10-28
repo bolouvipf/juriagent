@@ -4,7 +4,7 @@ Agent JuriAgent: comprendre -> rechercher -> rediger (format fixe) -> verifier.
 
 Principes: explique sans juger, chaque affirmation sourcee [Article X],
 abstention si le corpus ne suffit pas, orientation vers un humain.
-Modeles Meta: redaction muse-spark-1.3, verification muse-wonder-1.0.
+Modeles Meta: redaction muse-spark-1.3, verification muse-spark-1.3 (appel separe).
 
 Usage:
   python src/agent/agent.py --question "mon pere est decede, comment partager son terrain ?"
@@ -100,7 +100,7 @@ def run(question: str, situation: dict, searcher: Searcher | None = None) -> dic
         return {"abstention": True, "orientation": ORIENTATION,
                 "sources": [p["article"] for p in passages]}
     claims = deterministic_filter(ans.get("loi", []), passages)
-    claims = model_check(client, "muse-wonder-1.0", claims, passages)
+    claims = model_check(client, "muse-spark-1.3", claims, passages)
     if not claims:
         return {"abstention": True, "raison": "affirmations non appuyees par le corpus", "orientation": ORIENTATION}
     ans["loi"] = claims

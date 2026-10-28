@@ -47,7 +47,7 @@ Rédaction & Vérificateur : `muse-spark-1.3` via `https://api.meta.ai/v1` (clé
 
 20 questions fixées (`eval/questions.json`) : héritage, preuve, expropriation, expulsion, partage + 4 cas d'abstention. Harnais : `python eval/run_eval.py` → `eval/resultats.json`.
 
-**Résultats mesurés (28 oct. 2026, modèles Muse Spark + Wonder) :**
+**Résultats mesurés (28 oct. 2026, modèles Muse Spark (redaction + verification separee)) :**
 - Abstention conforme : **18/20** (les 2 écarts sont des sur-abstentions : H2, P3 — l'agent refuse par prudence)
 - Citations valides : **14/14 réponses** (chaque `[Article X]` existe dans les passages retrouvés)
 - Verdicts interdits : **0/20**

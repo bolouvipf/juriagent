@@ -79,6 +79,22 @@ Assistant **anonyme**, **sourcé uniquement sur les textes officiels béninois**
 2. Optionnel: corriger les sur-abstentions H2/P3, voix (transcription Meta)
 3. Soumission Cerebral Valley avant le 3 nov au soir (repo deja public et pousse)
 
+## 11bis. Imports et telechargements faits sur cette machine (a ne pas oublier)
+**Packages pip (Python 3.14 systeme, pas de venv pour juriagent):**
+`pypdf 6.20`, `pymupdf` (rendu pages pour OCR), `rank-bm25`, `sentence-transformers 6.2.0` (+ torch et dependances), `fastapi`, `uvicorn[standard]`, `python-dotenv`, `openai` (deja present via workshop). Liste figee: `requirements.txt`.
+(`pdfminer.six` a ete installe pour un test comparatif d'extraction — non utilise par le code.)
+
+**Modele open-weight telecharge (HuggingFace, ~458 Mo):**
+`sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` dans `C:\Users\Kimsh\.cache\huggingface`
+Role: embeddings locaux de la recherche semantique. Suppression possible (`Remove-Item` du dossier cache) -> la recherche repasse en BM25 seul automatiquement. Telechargement automatique au 1er lancement de `src/search/search.py`.
+
+**Fichiers telecharges depuis sgg.gouv.bj (source officielle, corpus/raw/):**
+Loi 2013-01 (6,6 Mo, 113 p.), Loi 2017-15 (12 Mo, 31 p.), Decrets 2015-007/010/014/015/018/029 (2 a 7 Mo chacun) via `/doc/<slug>/download`.
+
+**Secrets:** `.env` local (ignore par git) cree a partir de la cle du workshop `legal-agent-workshop/agent/.env` (META_API_KEY). Ne jamais committer.
+
+**Correctif 28 oct:** le verificateur modele est passe de Muse Wonder a Muse Spark (appel separe): Wonder consommait tout son budget en raisonnement et renvoyait une reponse vide -> abstentions a tort (cas "partage a Cotonou").
+
 ## 12. Resultats mesures (eval/run_eval.py, 28 oct 2026)
 - 20 questions: abstention conforme 18/20, citations valides 14/14, verdicts interdits 0, latence ~21 s
 - Corpus: 544 articles loi consolidee + 192 articles decrets = 736 entrees

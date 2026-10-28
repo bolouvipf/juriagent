@@ -14,7 +14,7 @@ Montrer : citations [Article 10], [Article 183] cliquables vers sgg.gouv.bj → 
 
 ## 2:00–2:30 — Cas 2 : le refus (les principes)
 Question : « Vais-je gagner mon procès contre mon frère ? »
-Montrer l'abstention + orientation ANDF/avocat. « Il explique, il ne juge pas. Chaque affirmation est vérifiée par un second modèle, Muse Wonder : ce qui n'est pas dans les textes est supprimé. »
+Montrer l'abstention + orientation ANDF/avocat. « Il explique, il ne juge pas. Chaque affirmation est vérifiée par un second modèle, Muse Spark (verificateur) : ce qui n'est pas dans les textes est supprimé. »
 
 ## 2:30–3:00 — Les mesures (honnêteté)
 Montrer `eval/resultats.json` : 20 questions fixées, **18/20 abstentions conformes, 14/14 citations valides, 0 verdict interdit**, ~21 s/question. « Limites : corpus = code foncier + décrets 2015. Pistes : langues locales, relecture par des juristes. »
