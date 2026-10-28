@@ -29,11 +29,13 @@ ORIENTATION = (
 
 
 def load_client():
+    import os
     from openai import OpenAI
-    key = ""
-    for line in Path(".env").read_text(encoding="utf-8-sig", errors="ignore").splitlines():
-        if line.startswith("META_API_KEY="):
-            key = line.split("=", 1)[1].strip()
+    key = os.environ.get("META_API_KEY", "")
+    if not key and Path(".env").exists():
+        for line in Path(".env").read_text(encoding="utf-8-sig", errors="ignore").splitlines():
+            if line.startswith("META_API_KEY="):
+                key = line.split("=", 1)[1].strip()
     if not key:
         print("META_API_KEY manquante dans .env", file=sys.stderr)
         sys.exit(2)

@@ -1,0 +1,8 @@
+[project]
+name = "juriagent"
+version = "0.1.0"
+description = "Assistant d'information sur le droit foncier au Benin (textes officiels, modeles Meta)"
+requires-python = ">=3.11"
+
+[tool.vercel]
+entrypoint = "src.api.main:app"
