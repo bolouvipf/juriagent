@@ -83,7 +83,15 @@ def ingest_file(file_path: Path, manifest_entry: dict | None) -> list[dict]:
     # concat avec marqueurs de page pour pouvoir retrouver pages par article
     # on garde pages séparées puis on mapping article -> pages en cherchant le texte
     full_text = "\n".join(t for _, t in pages)
+    if len(full_text.strip()) < 100:
+        # PDF scanne — pypdf ne sort rien, OCR requis
+        print(f"WARN {file_path.name}: texte extrait vide ({len(full_text)} car) — PDF scanne, OCR requis", file=sys.stderr)
+        full_text = ""
     articles = split_by_article(full_text)
+    if not articles and not full_text.strip():
+        # placeholder pour tracer le fichier scanne
+        doc_id = manifest_entry["id"] if manifest_entry else file_path.stem
+        return [{"id": f"{doc_id}_scanne", "source_id": doc_id, "article": "SCANNE", "texte": "[[PDF scanne — OCR requis]]", "date_adoption": manifest_entry.get("date_adoption") if manifest_entry else None, "modifie_par": None, "lien_source": manifest_entry.get("source_url") if manifest_entry else None, "pages": [1], "char_count": 0, "needs_ocr": True}]
 
     # mapping simple: pour chaque article, on cherche sur quelles pages son texte apparaît
     out = []
@@ -154,10 +162,12 @@ def main():
     with out_path.open("w", encoding="utf-8") as out:
         for r in all_records:
             out.write(json.dumps(r, ensure_ascii=False) + "\n")
-    print(f"→ {len(all_records)} articles écrits dans {out_path}")
-    # petit contrôle: afficher les 3 premiers ids
+    print(f"-> {len(all_records)} articles ecrits dans {out_path}")
+    # petit controle: afficher les 3 premiers ids
     for r in all_records[:3]:
         print(f"  - {r['id']} ({r['char_count']} car.)")
+    if any("preambule" in r["article"] or r["char_count"] < 50 for r in all_records):
+        print("NOTE: certains fichiers sont scannes (texte vide) -> OCR necessaire (voir TODO)", file=sys.stderr)
 
 if __name__ == "__main__":
     main()
