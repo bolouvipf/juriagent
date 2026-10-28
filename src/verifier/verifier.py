@@ -47,7 +47,7 @@ def model_check(client, model: str, claims: list[dict], passages: list[dict]) ->
         r = client.chat.completions.create(
             model=model,
             messages=[{"role": "user", "content": prompt}],
-            max_tokens=2500,
+            max_tokens=2500, temperature=0,
         )
         raw = r.choices[0].message.content or "{}"
         m = re.search(r"\{.*\}", raw, re.DOTALL)

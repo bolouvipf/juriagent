@@ -49,7 +49,7 @@ def expand_queries(client, question: str, situation: dict) -> list[str]:
     )
     try:
         r = client.chat.completions.create(model="muse-spark-1.3",
-                                           messages=[{"role": "user", "content": prompt}], max_tokens=1500)
+                                           messages=[{"role": "user", "content": prompt}], max_tokens=1500, temperature=0.2)
         m = re.search(r"\{.*\}", r.choices[0].message.content or "", re.DOTALL)
         qs = json.loads(m.group(0)).get("requetes", []) if m else []
         return [q for q in qs if q][:3] or [question]
@@ -82,7 +82,7 @@ def draft(client, question: str, situation: dict, passages: list[dict]) -> dict:
         f"Situation: {json.dumps(situation, ensure_ascii=False)}\nQuestion: {question}\n\nPASSAGES:\n{corpus}"
     )
     r = client.chat.completions.create(model="muse-spark-1.3",
-                                       messages=[{"role": "user", "content": prompt}], max_tokens=6000)
+                                       messages=[{"role": "user", "content": prompt}], max_tokens=6000, temperature=0.2)
     m = re.search(r"\{.*\}", r.choices[0].message.content or "", re.DOTALL)
     return json.loads(m.group(0)) if m else {"abstention": True}
 

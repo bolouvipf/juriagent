@@ -38,7 +38,7 @@ def main():
         dt = round(time.time() - t0, 1)
         text = json.dumps(ans, ensure_ascii=False)
         cited = CITATION.findall(text)
-        known = {str(s["article"]).lower() for s in ans.get("sources", [])}
+        known = {str(s["article"] if isinstance(s, dict) else s).lower() for s in ans.get("sources", [])}
         citations_ok = all(c.lower() in known for c in cited) if cited else (not ans.get("loi"))
         abst = bool(ans.get("abstention"))
         verdict = bool(FORBIDDEN.search(text)) and not abst

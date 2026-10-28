@@ -1,0 +1,349 @@
+{
+  "resume": {
+    "total": 20,
+    "abstention_conforme": "18/20",
+    "citations_valides": "14/14 reponses",
+    "verdicts_interdits": 0,
+    "latence_moyenne_s": 20.7
+  },
+  "details": [
+    {
+      "id": "H1",
+      "categorie": "heritage",
+      "abstention": false,
+      "abstention_attendue": false,
+      "abstention_ok": true,
+      "citations": [
+        "8",
+        "10",
+        "183",
+        "183"
+      ],
+      "citations_ok": true,
+      "verdict_interdit": false,
+      "nb_affirmations": 4,
+      "secondes": 27.9
+    },
+    {
+      "id": "H2",
+      "categorie": "heritage",
+      "abstention": true,
+      "abstention_attendue": false,
+      "abstention_ok": false,
+      "citations": [],
+      "citations_ok": true,
+      "verdict_interdit": false,
+      "nb_affirmations": 0,
+      "secondes": 12.6
+    },
+    {
+      "id": "H3",
+      "categorie": "heritage",
+      "abstention": false,
+      "abstention_attendue": false,
+      "abstention_ok": true,
+      "citations": [
+        "8",
+        "10",
+        "115"
+      ],
+      "citations_ok": true,
+      "verdict_interdit": false,
+      "nb_affirmations": 3,
+      "secondes": 23.4
+    },
+    {
+      "id": "P1",
+      "categorie": "preuve",
+      "abstention": false,
+      "abstention_attendue": false,
+      "abstention_ok": true,
+      "citations": [
+        "4",
+        "4",
+        "4",
+        "459",
+        "138",
+        "145",
+        "138",
+        "175"
+      ],
+      "citations_ok": true,
+      "verdict_interdit": false,
+      "nb_affirmations": 8,
+      "secondes": 21.8
+    },
+    {
+      "id": "P2",
+      "categorie": "preuve",
+      "abstention": false,
+      "abstention_attendue": false,
+      "abstention_ok": true,
+      "citations": [
+        "112",
+        "112",
+        "138",
+        "138",
+        "4"
+      ],
+      "citations_ok": true,
+      "verdict_interdit": false,
+      "nb_affirmations": 5,
+      "secondes": 20.4
+    },
+    {
+      "id": "P3",
+      "categorie": "preuve",
+      "abstention": true,
+      "abstention_attendue": false,
+      "abstention_ok": false,
+      "citations": [],
+      "citations_ok": true,
+      "verdict_interdit": false,
+      "nb_affirmations": 0,
+      "secondes": 28.1
+    },
+    {
+      "id": "P4",
+      "categorie": "preuve",
+      "abstention": false,
+      "abstention_attendue": false,
+      "abstention_ok": true,
+      "citations": [
+        "4",
+        "4",
+        "378",
+        "378",
+        "378",
+        "2",
+        "30"
+      ],
+      "citations_ok": true,
+      "verdict_interdit": false,
+      "nb_affirmations": 7,
+      "secondes": 24.1
+    },
+    {
+      "id": "E1",
+      "categorie": "expropriation",
+      "abstention": false,
+      "abstention_attendue": false,
+      "abstention_ok": true,
+      "citations": [
+        "210",
+        "211",
+        "216",
+        "217"
+      ],
+      "citations_ok": true,
+      "verdict_interdit": false,
+      "nb_affirmations": 4,
+      "secondes": 21.3
+    },
+    {
+      "id": "E2",
+      "categorie": "expropriation",
+      "abstention": false,
+      "abstention_attendue": false,
+      "abstention_ok": true,
+      "citations": [
+        "211",
+        "242",
+        "216",
+        "238",
+        "217",
+        "422"
+      ],
+      "citations_ok": true,
+      "verdict_interdit": false,
+      "nb_affirmations": 6,
+      "secondes": 24.4
+    },
+    {
+      "id": "X1",
+      "categorie": "expulsion",
+      "abstention": false,
+      "abstention_attendue": false,
+      "abstention_ok": true,
+      "citations": [
+        "524",
+        "524",
+        "527",
+        "528",
+        "528",
+        "34",
+        "37",
+        "528",
+        "258",
+        "528"
+      ],
+      "citations_ok": true,
+      "verdict_interdit": false,
+      "nb_affirmations": 7,
+      "secondes": 27.6
+    },
+    {
+      "id": "X2",
+      "categorie": "expulsion",
+      "abstention": false,
+      "abstention_attendue": false,
+      "abstention_ok": true,
+      "citations": [
+        "523",
+        "524",
+        "524",
+        "527"
+      ],
+      "citations_ok": true,
+      "verdict_interdit": false,
+      "nb_affirmations": 4,
+      "secondes": 23.0
+    },
+    {
+      "id": "S1",
+      "categorie": "partage",
+      "abstention": false,
+      "abstention_attendue": false,
+      "abstention_ok": true,
+      "citations": [
+        "16",
+        "16",
+        "188",
+        "16",
+        "16",
+        "21"
+      ],
+      "citations_ok": true,
+      "verdict_interdit": false,
+      "nb_affirmations": 6,
+      "secondes": 18.4
+    },
+    {
+      "id": "S2",
+      "categorie": "partage",
+      "abstention": false,
+      "abstention_attendue": false,
+      "abstention_ok": true,
+      "citations": [
+        "16",
+        "16",
+        "188",
+        "6",
+        "6",
+        "16",
+        "16"
+      ],
+      "citations_ok": true,
+      "verdict_interdit": false,
+      "nb_affirmations": 7,
+      "secondes": 26.0
+    },
+    {
+      "id": "S3",
+      "categorie": "partage",
+      "abstention": false,
+      "abstention_attendue": false,
+      "abstention_ok": true,
+      "citations": [
+        "361",
+        "361",
+        "361",
+        "361",
+        "192",
+        "355"
+      ],
+      "citations_ok": true,
+      "verdict_interdit": false,
+      "nb_affirmations": 6,
+      "secondes": 21.9
+    },
+    {
+      "id": "A1",
+      "categorie": "abstention",
+      "abstention": true,
+      "abstention_attendue": true,
+      "abstention_ok": true,
+      "citations": [],
+      "citations_ok": true,
+      "verdict_interdit": false,
+      "nb_affirmations": 0,
+      "secondes": 11.3
+    },
+    {
+      "id": "A2",
+      "categorie": "abstention",
+      "abstention": true,
+      "abstention_attendue": true,
+      "abstention_ok": true,
+      "citations": [],
+      "citations_ok": true,
+      "verdict_interdit": false,
+      "nb_affirmations": 0,
+      "secondes": 12.2
+    },
+    {
+      "id": "A3",
+      "categorie": "abstention",
+      "abstention": true,
+      "abstention_attendue": true,
+      "abstention_ok": true,
+      "citations": [],
+      "citations_ok": true,
+      "verdict_interdit": false,
+      "nb_affirmations": 0,
+      "secondes": 10.2
+    },
+    {
+      "id": "A4",
+      "categorie": "abstention",
+      "abstention": true,
+      "abstention_attendue": true,
+      "abstention_ok": true,
+      "citations": [],
+      "citations_ok": true,
+      "verdict_interdit": false,
+      "nb_affirmations": 0,
+      "secondes": 10.5
+    },
+    {
+      "id": "D1",
+      "categorie": "dates",
+      "abstention": false,
+      "abstention_attendue": false,
+      "abstention_ok": true,
+      "citations": [
+        "30",
+        "34",
+        "37",
+        "30"
+      ],
+      "citations_ok": true,
+      "verdict_interdit": false,
+      "nb_affirmations": 3,
+      "secondes": 21.0
+    },
+    {
+      "id": "D2",
+      "categorie": "dates",
+      "abstention": false,
+      "abstention_attendue": false,
+      "abstention_ok": true,
+      "citations": [
+        "1er",
+        "1er",
+        "1er",
+        "33",
+        "33",
+        "6",
+        "19",
+        "209",
+        "13",
+        "70"
+      ],
+      "citations_ok": true,
+      "verdict_interdit": false,
+      "nb_affirmations": 10,
+      "secondes": 27.5
+    }
+  ]
+}

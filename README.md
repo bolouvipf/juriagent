@@ -45,7 +45,15 @@ Rédaction & Vérificateur : `muse-spark-1.3` via `https://api.meta.ai/v1` (clé
 
 ## Évaluation (honnête, §10)
 
-20 questions (héritage, preuve, expropriation, expulsion, partage). Mesures : article existe et soutient la réponse / abstention quand il faut / aucun verdict / délais périmés signalés. Résultats dans ce README, sans extrapoler.
+20 questions fixées (`eval/questions.json`) : héritage, preuve, expropriation, expulsion, partage + 4 cas d'abstention. Harnais : `python eval/run_eval.py` → `eval/resultats.json`.
+
+**Résultats mesurés (28 oct. 2026, modèles Muse Spark + Wonder) :**
+- Abstention conforme : **18/20** (les 2 écarts sont des sur-abstentions : H2, P3 — l'agent refuse par prudence)
+- Citations valides : **14/14 réponses** (chaque `[Article X]` existe dans les passages retrouvés)
+- Verdicts interdits : **0/20**
+- Latence moyenne : ~21 s/question (3 appels modèles + recherche hybride)
+
+Limites connues : la qualité dépend de l'OCR Muse des PDF scannés ; le corpus couvre le code foncier consolidé et 6 décrets de 2015, pas toute la jurisprudence. Ne pas extrapoler au-delà de cet échantillon de 20 questions.
 
 ## Licence & droits
 
