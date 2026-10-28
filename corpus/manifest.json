@@ -20,16 +20,6 @@
     "notes": "Ne jamais utiliser seule — intégrer dans le consolidé"
   },
   {
-    "id": "decrets-2015",
-    "title": "Décrets d'application 2015 (007, 010, 014, 018, 015, 029)",
-    "role": "procédures concrètes",
-    "date_adoption": "2015",
-    "source_url": "https://sgg.gouv.bj/",
-    "local_path": "corpus/raw/decrets-2015/",
-    "statut_droits": "Disponibles sur sgg.gouv.bj ; mentions légales à lire",
-    "notes": "À identifier précisément (007 Conseil consultatif foncier, 010 ANDF, 014 mise en valeur, 018 PFR)"
-  },
-  {
     "id": "legis",
     "title": "LEGIS (legis.cdij.bj) — base ministère Justice",
     "role": "non collecté",
@@ -42,5 +32,65 @@
     "role": "non collecté",
     "statut_droits": "Accès automatisé refusé — ne pas collecter",
     "notes": ""
+  },
+  {
+    "id": "decret-2015-007",
+    "title": "Decret n 2015-007 du 29 janvier 2015 — Conseil Consultatif Foncier (CCF) — attributions, organisation, fonctionnement",
+    "role": "decret d application (procedures)",
+    "date_adoption": "2015-01-29",
+    "source_url": "https://sgg.gouv.bj/doc/decret-2015-007/",
+    "local_path": "corpus/raw/decrets-2015/decret-2015-007.pdf",
+    "statut_droits": "Disponible sur sgg.gouv.bj ; mentions legales a lire",
+    "notes": "Texte OCRise par Muse Spark vision (couche texte corrompue)"
+  },
+  {
+    "id": "decret-2015-010",
+    "title": "Decret n 2015-010 du 29 janvier 2015 — Agence Nationale du Domaine et du Foncier (ANDF) — attributions, organisation, fonctionnement",
+    "role": "decret d application (procedures)",
+    "date_adoption": "2015-01-29",
+    "source_url": "https://sgg.gouv.bj/doc/decret-2015-010/",
+    "local_path": "corpus/raw/decrets-2015/decret-2015-010.pdf",
+    "statut_droits": "Disponible sur sgg.gouv.bj ; mentions legales a lire",
+    "notes": "Texte OCRise par Muse Spark vision (couche texte corrompue)"
+  },
+  {
+    "id": "decret-2015-014",
+    "title": "Decret n 2015-014 du 29 janvier 2015 — conditions et modalites de mise en valeur des terres rurales",
+    "role": "decret d application (procedures)",
+    "date_adoption": "2015-01-29",
+    "source_url": "https://sgg.gouv.bj/doc/decret-2015-014/",
+    "local_path": "corpus/raw/decrets-2015/decret-2015-014.pdf",
+    "statut_droits": "Disponible sur sgg.gouv.bj ; mentions legales a lire",
+    "notes": "Texte OCRise par Muse Spark vision (couche texte corrompue)"
+  },
+  {
+    "id": "decret-2015-015",
+    "title": "Decret n 2015-015 du 29 janvier 2015 — modalites de division et de reunion des titres de propriete fonciere",
+    "role": "decret d application (procedures)",
+    "date_adoption": "2015-01-29",
+    "source_url": "https://sgg.gouv.bj/doc/decret-2015-015/",
+    "local_path": "corpus/raw/decrets-2015/decret-2015-015.pdf",
+    "statut_droits": "Disponible sur sgg.gouv.bj ; mentions legales a lire",
+    "notes": "Texte OCRise par Muse Spark vision (couche texte corrompue)"
+  },
+  {
+    "id": "decret-2015-018",
+    "title": "Decret n 2015-018 du 29 janvier 2015 — modalites d etablissement du Plan Foncier Rural et de confirmation des droits fonciers a partir du PFR",
+    "role": "decret d application (procedures)",
+    "date_adoption": "2015-01-29",
+    "source_url": "https://sgg.gouv.bj/doc/decret-2015-018/",
+    "local_path": "corpus/raw/decrets-2015/decret-2015-018.pdf",
+    "statut_droits": "Disponible sur sgg.gouv.bj ; mentions legales a lire",
+    "notes": "Texte OCRise par Muse Spark vision (couche texte corrompue)"
+  },
+  {
+    "id": "decret-2015-029",
+    "title": "Decret n 2015-029 du 29 janvier 2015 — modalites d acquisition des terres rurales",
+    "role": "decret d application (procedures)",
+    "date_adoption": "2015-01-29",
+    "source_url": "https://sgg.gouv.bj/doc/decret-2015-029/",
+    "local_path": "corpus/raw/decrets-2015/decret-2015-029.pdf",
+    "statut_droits": "Disponible sur sgg.gouv.bj ; mentions legales a lire",
+    "notes": "Texte OCRise par Muse Spark vision (couche texte corrompue)"
   }
 ]
