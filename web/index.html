@@ -101,7 +101,6 @@ summary{font-weight:700;cursor:pointer;font-size:.94rem}
   <div class="seal">J</div>
   <div class="who"><b>JuriAgent</b><span>Assistant foncier du Bénin — il explique, il ne juge pas</span></div>
   <div class="badge">Textes officiels</div>
-  <button id="demoBtn" type="button" style="font-family:var(--ui);font-weight:700;border:1px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:999px;padding:8px 14px;cursor:pointer">▶ Démo automatique</button>
 </header>
 
 <main id="main">
@@ -171,28 +170,6 @@ function botSay(html){
 
 document.querySelectorAll('.scenario').forEach(b=>b.onclick=()=>{ input.value=b.dataset.q; $('composer').requestSubmit(); });
 
-const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-async function typeIntoInput(text){
-  input.focus();
-  for(let i=0;i<=text.length;i+=3){ input.value=text.slice(0,i); input.dispatchEvent(new Event('input')); await sleep(24); }
-  await sleep(700);
-}
-document.getElementById('demoBtn').onclick=async()=>{
-  if(state.demo) return; state.demo=true;
-  document.getElementById('demoBtn').disabled=true;
-  const q1="Mon père est décédé, nous sommes 4 enfants, comment partager son terrain à Cotonou ?";
-  await typeIntoInput(q1); $('composer').requestSubmit();
-  await sleep(2500);
-  const choix=thread.querySelector('[data-mode="deux"]'); if(choix) choix.click();
-  while(state.busy) await sleep(1000);
-  await sleep(2500);
-  const q2="Vais-je gagner mon procès contre mon frère pour ce terrain ?";
-  await typeIntoInput(q2); $('composer').requestSubmit();
-  while(state.busy||state.stage!=='suivi') await sleep(1000);
-  await sleep(1500);
-  botSay(`<p><b>Ce que vous venez de voir est réel et mesuré :</b> 20 questions fixées à l'avance — 18 réponses ou refus conformes, 18 citations sur 18 valides, aucun verdict interdit. Le corpus : le code foncier béninois consolidé et ses décrets, lus par OCR Muse sur les PDF officiels scannés.</p><p>Essayez par vous-même : <b>juriagent.vercel.app</b></p>`);
-  state.demo=false; document.getElementById('demoBtn').disabled=false;
-};
 input.addEventListener('input',()=>{ input.style.height='auto'; input.style.height=Math.min(input.scrollHeight,130)+'px'; });
 input.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); $('composer').requestSubmit(); } });
 
