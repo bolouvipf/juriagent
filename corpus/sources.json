@@ -1,0 +1,46 @@
+[
+  {
+    "title": "Loi n° 2008-07 du 28 février 2011 portant code de procédure civile, commerciale, sociale, administrative et des comptes",
+    "short": "Code de procédure civile (2011)",
+    "nature": "loi",
+    "date": "2011-02-28",
+    "kind": "base",
+    "status": "en_vigueur_texte_origine",
+    "status_note": "Texte d'origine de 2011, non consolidé. Beaucoup d'articles ont été remplacés depuis (voir superseded_by).",
+    "normative": true,
+    "doc_id": "loi-2008-07",
+    "pages_ocr": 162,
+    "source_origin": "Copie de travail fournie par des juristes en cabinet ; provenance officielle (SGG, Journal officiel ou base payante) À CONFIRMER",
+    "rights_status": "À CONFIRMER : textes de loi ; vérifier les conditions de réutilisation de la source d'origine avant toute publication du texte"
+  },
+  {
+    "title": "Loi n° 2016-16 du 28 juillet 2016 modifiant et complétant la loi n° 2008-07 du 28 février 2011 portant code de procédure civile, commerciale, sociale, administrative et des comptes",
+    "short": "Loi modificative 2016-16",
+    "nature": "loi",
+    "date": "2016-07-28",
+    "kind": "modificative",
+    "status": "promulguee",
+    "status_note": "Promulguée le 28 juillet 2016. Chaque article « nouveau » remplace l'article du même numéro du code de 2011.",
+    "normative": true,
+    "modifies": "loi-2008-07",
+    "doc_id": "loi-2016-16",
+    "pages_ocr": 16,
+    "source_origin": "Copie de travail fournie par des juristes en cabinet ; provenance officielle (SGG, Journal officiel ou base payante) À CONFIRMER",
+    "rights_status": "À CONFIRMER : textes de loi ; vérifier les conditions de réutilisation de la source d'origine avant toute publication du texte"
+  },
+  {
+    "title": "Décret n° 2020-198 du 11 mars 2020 portant transmission à l'Assemblée nationale du projet de loi portant modernisation de la justice",
+    "short": "Projet de loi modernisation de la justice (2020)",
+    "nature": "decret_et_projet_de_loi",
+    "date": "2020-03-11",
+    "kind": "projet",
+    "status": "projet_non_adopte_dans_ce_document",
+    "status_note": "PROJET. Le texte joint a une date d'adoption laissée en blanc. Ne jamais citer comme droit en vigueur. Retrouver la loi promulguée.",
+    "normative": false,
+    "doc_id": "decret-2020-198",
+    "pages_ocr": 22,
+    "source_origin": "Copie de travail fournie par des juristes en cabinet ; provenance officielle (SGG, Journal officiel ou base payante) À CONFIRMER",
+    "rights_status": "À CONFIRMER : textes de loi ; vérifier les conditions de réutilisation de la source d'origine avant toute publication du texte",
+    "adoption_date_blank": true
+  }
+]

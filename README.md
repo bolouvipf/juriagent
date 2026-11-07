@@ -69,6 +69,17 @@ Choix : la production reste sur l'API Meta (priorité à la sécurité juridique
 
 Limites connues : la qualité dépend de l'OCR Muse des PDF scannés ; le corpus couvre le code foncier consolidé et 6 décrets de 2015, pas toute la jurisprudence. Ne pas extrapoler au-delà de cet échantillon de 20 questions.
 
+## Corpus procédure civile (intégré le 07/11/2026 — `docs/INTEGRATION-procedure.md`)
+
+Code de procédure civile 2011 (loi 2008-07) + loi modificative 2016-16 + projet 2020 (décret 2020-198, **non normatif**) : 1 303 enregistrements, recherche BM25+trigrammes (`src/search/procedure.py`), réponse déterministe citée (`POST /api/ask-procedure`). Règles : version 2016-16 servie à la place de l'original remplacé, projet 2020 uniquement en encadré « non confirmé comme adopté », citation = label + date + pages PDF + badge de statut + avertissement OCR. Tests d'acceptation T1–T7 : `python eval/test_procedure.py` → **7/7**.
+
+**Lacunes connues (ne jamais les combler par invention) :**
+- Loi 2016-16 : page imprimée 15 manquante dans le PDF fourni — articles **nouveaux 874, 883, 884, 886, 888, 894 absents** et fin du 881 ; obtenir une copie complète.
+- Code de 2011 : **30 numéros non retrouvés** par l'OCR (liste dans `corpus/qa_report.md`, local) et 14 numéros réparés — ne jamais écrire « l'article X n'existe pas » à partir de ce corpus.
+- Projet de 2020 : pas d'article 8, date d'adoption en blanc — retrouver la loi promulguée avant toute intégration comme droit en vigueur. Il cite une loi 2017-15 « procédure » alors que la 2017-15 connue concerne le foncier : chaîne de modifications à vérifier.
+- 51 enregistrements `needs_review` (à relire avant démo, priorité aux délais). Écart relevé : l'item 17 du projet vise l'art. 589 dans son texte mais `proposed_target.articles` s'arrête à 588 (`approximate`) — la mention « projet 2020 » est donc dérivée du découpage par articles cités, sans réécrire le corpus.
+- Droits : `rights_status` **à confirmer** → `corpus/articles.jsonl` et l'OCR procédure ne sont **pas versionnés** (voir `.gitignore`) ; seul `corpus/sources.json` (métadonnées) est publié. Ce corpus ne contient pas le code foncier : pour titre/héritage/expropriation, réponse « texte de base pas encore intégré » (`coverage_check`, R5).
+
 ## Licence & droits
 
 Chaque source listée dans `corpus/manifest.json` avec son statut. Ne pas collecter `textes.justice.bj` (accès automatisé refusé) ni LEGIS sans autorisation.

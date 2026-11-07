@@ -21,6 +21,8 @@ from pydantic import BaseModel  # noqa: E402
 
 from search.search import Searcher  # noqa: E402
 from agent.agent import run as agent_run  # noqa: E402
+from search.procedure import ProcedureCorpus  # noqa: E402
+from agent.procedure_agent import answer as procedure_answer  # noqa: E402
 
 app = FastAPI(title="JuriAgent — droit foncier Benin")
 _searcher: Searcher | None = None
@@ -50,6 +52,24 @@ class Export(BaseModel):
 @app.get("/api/health")
 def health():
     return {"ok": True, "corpus": len(get_searcher().rows)}
+
+
+_procedure: ProcedureCorpus | None = None
+
+
+def get_procedure() -> ProcedureCorpus:
+    global _procedure
+    if _procedure is None:
+        _procedure = ProcedureCorpus()
+    return _procedure
+
+
+@app.post("/api/ask-procedure")
+def ask_procedure(req: Ask):
+    """Procedure civile (corpus prive, R1-R6): reponse deterministe citee
+    label+date+pages+badge, projet 2020 en encadre separe, abstentions
+    lacune/couverture/verdict. Voir docs/INTEGRATION-procedure.md."""
+    return procedure_answer(get_procedure(), req.question)
 
 
 @app.post("/api/ask")

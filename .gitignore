@@ -18,3 +18,13 @@ Thumbs.db
 
 # cache OCR par page (reconstruit depuis les .txt assembles)
 corpus/ocr/*/
+
+# Corpus procedure civile (R6, docs/INTEGRATION-procedure.md): droits non
+# confirmes -> jamais versionne tant que rights_status n'est pas confirme.
+# Seul corpus/sources.json (metadonnees) est publie; charger articles.jsonl
+# depuis un stockage prive ou JURI_PROCEDURE_CORPUS.
+corpus/articles.jsonl
+corpus/qa_report.md
+corpus/ocr/loi-2008-07.txt
+corpus/ocr/loi-2016-16.txt
+corpus/ocr/decret-2020-198.txt
