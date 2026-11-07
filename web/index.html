@@ -55,12 +55,12 @@ main{flex:1;overflow-y:auto;scroll-behavior:smooth}
 .bot-body h3:first-child{margin-top:2px}
 .bot-body ul,.bot-body ol{padding-left:1.15em}
 .bot-body li{margin:.42em 0}
-.choices{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.choice{font-family:var(--ui);font-weight:700;font-size:.92rem;padding:10px 14px;border-radius:999px;border:1px solid var(--accent);color:var(--accent-deep);background:var(--paper);cursor:pointer}
-.choice:hover{background:var(--accent);color:var(--accent-ink)}
-.choice:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .cite{font-family:var(--ui);font-size:.84em;background:var(--paper-2);border:1px solid var(--line);border-radius:6px;padding:0 .35em;white-space:nowrap}
 .card{border:1px solid var(--line);border-radius:18px;padding:6px 18px 14px;background:var(--paper-2);margin-top:14px}
+.sec{display:flex;flex-direction:column;gap:6px;margin:14px 0 0}
+.sec:first-child{margin-top:6px}
+.lab{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--accent-deep)}
+.stop{border-left:4px solid #C8372D;background:#FBEDEA;border-radius:0 10px 10px 0;padding:12px 14px;font-size:.95rem;line-height:1.5;margin-top:16px}
 details{border:1px solid var(--line);border-radius:14px;padding:10px 14px;margin-top:14px}
 summary{font-weight:700;cursor:pointer;font-size:.94rem}
 .src{font-size:.9rem}
@@ -94,6 +94,11 @@ summary{font-weight:700;cursor:pointer;font-size:.94rem}
 .send:disabled{opacity:.5;cursor:wait}
 .send:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .hint{font-size:.78rem;color:var(--ink-soft);text-align:center;margin:9px 0 0}
+.badge-status{display:inline-block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700;border:1px solid var(--accent);color:var(--accent-deep);border-radius:999px;padding:2px 8px;white-space:nowrap}
+.badge-status.projet{border-color:var(--warm);color:oklch(45% 0.1 65)}
+.proc-cite{font-size:.84rem;color:var(--ink-soft);margin-top:4px}
+.projet-box{border:1.5px dashed var(--warm);background:var(--alert);border-radius:14px;padding:12px 16px;margin-top:14px}
+.projet-box .lab{color:oklch(45% 0.1 65)}
 </style>
 </head>
 <body>
@@ -115,14 +120,25 @@ summary{font-weight:700;cursor:pointer;font-size:.94rem}
         <button class="scenario" type="button" data-q="L'État veut prendre mon terrain pour un projet public, quels sont mes droits ?"><b>L'État veut mon terrain</b><span>Expropriation : quels sont mes droits ?</span></button>
         <button class="scenario" type="button" data-q="Un homme occupe mon terrain depuis 12 ans, que prévoit la loi ?"><b>Terrain occupé</b><span>Quelqu'un occupe mon terrain depuis 12 ans</span></button>
       </div>
+      <p style="margin:26px 0 10px"><b>Procédure civile</b> <span style="color:var(--ink-soft)">— délais d'appel, juge de l'exécution, voies de recours (code de procédure civile 2011, modifié en 2016).</span></p>
+      <div class="scenarios">
+        <button class="scenario proc" type="button" data-q="Quel est le délai d'appel en matière contentieuse ?"><b>Délai d'appel</b><span>Combien de temps pour faire appel d'un jugement ?</span></button>
+        <button class="scenario proc" type="button" data-q="Délai d'appel contre le juge de l'exécution"><b>Juge de l'exécution</b><span>Contester une décision du juge de l'exécution</span></button>
+        <button class="scenario proc" type="button" data-q="Que dit l'article 884 ?"><b>Article 884</b><span>Exemple de lacune : l'assistant dit ce qu'il ne sait pas</span></button>
+      </div>
     </section>
     <div id="thread" aria-live="polite"></div>
   </div>
 </main>
 
+<footer style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 18px;border-top:1px solid var(--line);background:var(--paper-2);font-size:.82rem;color:var(--ink-soft)"><span>Propulsé par <b style="color:var(--ink)">Meta</b> · Muse Spark · Baseten</span><span>Sources : textes officiels de la République du Bénin</span></footer>
 <div class="composer-zone">
   <form class="composer" id="composer">
     <div class="situation">
+      <select id="domaine" aria-label="Domaine">
+        <option value="foncier">Domaine : foncier</option>
+        <option value="procedure">Domaine : procédure civile</option>
+      </select>
       <select id="type" aria-label="Type de situation">
         <option value="">Situation…</option>
         <option value="heritage">Héritage</option>
@@ -150,7 +166,7 @@ summary{font-weight:700;cursor:pointer;font-size:.94rem}
 <script>
 const $=id=>document.getElementById(id);
 const thread=$('thread'), mainEl=$('main'), input=$('input');
-let state={stage:'probleme', probleme:'', mode:'deux', busy:false};
+let state={stage:'probleme', probleme:'', busy:false};
 let lastExport=null;
 
 function esc(s){return (s||'').toString().replace(/</g,'&lt;')}
@@ -168,7 +184,7 @@ function botSay(html){
   thread.appendChild(row); scrollDown(); return row.querySelector('.bot-body');
 }
 
-document.querySelectorAll('.scenario').forEach(b=>b.onclick=()=>{ input.value=b.dataset.q; $('composer').requestSubmit(); });
+document.querySelectorAll('.scenario').forEach(b=>b.onclick=()=>{ $('domaine').value=b.classList.contains('proc')?'procedure':'foncier'; input.value=b.dataset.q; $('composer').requestSubmit(); });
 
 input.addEventListener('input',()=>{ input.style.height='auto'; input.style.height=Math.min(input.scrollHeight,130)+'px'; });
 input.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); $('composer').requestSubmit(); } });
@@ -182,17 +198,11 @@ $('composer').addEventListener('submit', async e=>{
   document.getElementById('hero').style.display='none';
   userSay(text);
   if(state.stage==='probleme'){
-    state.probleme=text; state.stage='choix';
-    const body=botSay(`<p>Si je comprends bien : « ${esc(text)} »</p><p style="color:var(--ink-soft)">Petit rappel : restez général — pas de noms complets, de numéros d'identité, de téléphone ni de numéros de titres.</p><p><b>Que voulez-vous savoir ?</b></p>
-      <div class="choices">
-        <button class="choice" data-mode="loi" type="button">Ce que dit la loi</button>
-        <button class="choice" data-mode="faire" type="button">Quoi faire concrètement</button>
-        <button class="choice" data-mode="deux" type="button">Les deux</button>
-      </div>`);
-    body.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{ state.mode=b.dataset.mode; ask(state.probleme); });
-  } else {
-    ask(text);
+    state.probleme=text;
+    botSay(`<p>Si je comprends bien : « ${esc(text)} »</p><p style="color:var(--ink-soft)">Restez général — pas de noms complets, de numéros d'identité, de téléphone ni de numéros de titres.</p>`);
   }
+  state.stage='suivi';
+  if($('domaine').value==='procedure') askProcedure(text); else ask(text);
 });
 
 const STEPS=['Recherche dans le code foncier et les décrets…','Rédaction de votre réponse…','Vérification de chaque affirmation…'];
@@ -208,9 +218,11 @@ async function ask(question){
     const d=await r.json();
     lastExport={question, situation:situation(), reponse:d};
     clearInterval(timer);
-    body.innerHTML=renderAnswer(d, state.mode);
+    body.innerHTML=renderAnswer(d);
     const ex=body.querySelector('#exportBtn'); if(ex) ex.onclick=exporter;
-    botSay("<p>Vous pouvez me poser une autre question sur votre situation — une pièce, un délai, une démarche. Chaque réponse est revérifiée dans les textes.</p>");
+    const sb=body.querySelector('#sourcesBtn'); const det=body.querySelector('#sourcesDetails');
+    if(sb&&det) sb.onclick=()=>{ det.open=!det.open; if(det.open) det.scrollIntoView({behavior:'smooth',block:'nearest'}); };
+    botSay("<p>Si un point n'est pas clair — une pièce, un délai, une étape — demandez-le simplement.</p>");
     state.stage='suivi';
   }catch(err){
     clearInterval(timer);
@@ -219,26 +231,47 @@ async function ask(question){
   state.busy=false; $('send').disabled=false; scrollDown();
 }
 
-function renderAnswer(d, mode){
+const PROC_RAISONS={lacune_corpus:'Lacune du corpus',prediction_verdict:'Pas de prédiction possible',texte_de_base_pas_encore_integre:'Texte de base pas encore intégré',needs_review:'Texte à relire avant affirmation',aucun_id_pertinent:'Aucun texte pertinent trouvé'};
+async function askProcedure(question){
+  state.busy=true; $('send').disabled=true;
+  const body=botSay('<div class="progress"><span class="on">● Recherche dans le code de procédure civile (2011, modifié en 2016)…</span></div>');
+  try{
+    const r=await fetch('/api/ask-procedure',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question})});
+    if(!r.ok) throw new Error(r.status);
+    body.innerHTML=renderProcedure(await r.json());
+  }catch(err){
+    body.innerHTML='<div class="alert"><p><b>Service indisponible</b> — réessayez dans un instant.</p></div>';
+  }
+  state.busy=false; $('send').disabled=false; scrollDown();
+}
+function citeLine(c){ return `<div class="proc-cite">${esc(c.label)} — ${esc(c.doc_title_short)} (${esc(c.doc_date)}), ${esc(c.pages_pdf)} <span class="badge-status">${esc(c.badge)}</span>${c.version?' — '+esc(c.version):''}${c.projet_2020?'<br>'+esc(c.projet_2020):''}<br>${esc(c.ocr_warning)}</div>`; }
+function renderProcedure(d){
   if(d.abstention){
-    return `<div class="alert"><p><b>Les textes disponibles ne permettent pas de répondre.</b></p><p>${esc(d.orientation||'')}</p><p>Je peux expliquer les textes, mais pas dire qui a raison ni quelle stratégie adopter.</p></div>`;
+    return `<div class="alert"><p><b>${esc(PROC_RAISONS[d.raison]||'Réponse impossible à partir des textes')}</b></p><p>${esc(d.message||'')}</p></div>`;
+  }
+  const lois=(d.loi||[]).map((x,i)=>`<li>${esc((x.texte||'').trim())}${(d.citations&&d.citations[i])?citeLine(d.citations[i]):''}</li>`).join('');
+  const projet=(d.projet||[]).length?`<div class="projet-box"><span class="lab">Projet de loi (2020) : non confirmé comme adopté</span><ul style="margin:6px 0 0;padding-left:1.15em">${d.projet.map(p=>`<li class="src">${esc(p.citation)} <span class="badge-status projet">projet</span></li>`).join('')}</ul><p class="proc-cite">Ces textes ne sont pas présentés comme des règles en vigueur.</p></div>`:'';
+  return `<div class="card"><div class="sec"><span class="lab">Ce que dit la loi — procédure civile</span><ul style="margin:0;padding-left:1.15em">${lois}</ul></div></div>${projet}<p class="notice">${esc(d.orientation||'')}</p>`;
+}
+
+function renderAnswer(d){
+  const contacts=(d.contacts||[]).map(c=>`<li><b>${esc(c.qui)}</b> — ${esc(c.role)}<br><span style="color:var(--ink-soft)">À demander : ${esc(c.demander)} <span class="cite">${esc(c.base)}</span></span></li>`).join('');
+  const contactsBlock=contacts?`<h3>Qui peut vous accompagner</h3><ul>${contacts}</ul>`:'';
+  if(d.abstention){
+    return `<div class="alert"><p><b>Je n'ai pas de texte officiel sur ce point précis.</b></p><p>${esc(d.orientation||'')}</p><p>Je reste utile sur le foncier : titre foncier, succession, partage, expropriation, expulsion, délais et pièces à réunir.</p></div>${contactsBlock}`;
   }
   const lois=(d.loi||[]).map(x=>`<li>${cite(x.texte||x)}</li>`).join('');
-  const loiBlock=`<h3>Ce que dit la loi</h3><ul>${lois}</ul>`;
+  const loiBlock=lois?`<div class="sec"><span class="lab">Ce que dit la loi</span><ul style="margin:0;padding-left:1.15em">${lois}</ul></div>`:'';
+  const simpleBlock=d.simple?`<div class="sec"><span class="lab">En mots simples</span><div style="line-height:1.55">${esc(d.simple)}</div></div>`:'';
   const steps=(d.demarches||[]).map(x=>`<li>${cite(x.texte||x)}</li>`).join('');
   const pieces=(d.pieces||[]).map(x=>`<li><label><input type="checkbox"><span>${cite(x.texte||x)}</span></label></li>`).join('');
-  const faireBlock=`<h3>Quoi faire, dans l'ordre</h3><ol class="steps">${steps}</ol><h3>Pièces à réunir — cochez au fur et à mesure</h3><ul class="check">${pieces}</ul>`;
+  const faireBlock=`<div class="sec"><span class="lab">Quoi faire, dans l'ordre</span><ol class="steps" style="margin:0">${steps}</ol></div><div class="sec"><span class="lab">Pièces à réunir — cochez au fur et à mesure</span><ul class="check" style="margin:0">${pieces}</ul></div>`;
   const warn=(d.delais_signales||[]).length?`<div class="alert"><p><b>Attention aux délais</b></p><ul>${d.delais_signales.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:'';
   const src=(d.sources||[]).map(s=>`<li class="src">Article ${esc(s.article)} (${esc(s.statut||'')}) — <a href="${esc(s.lien||'#')}" target="_blank" rel="noopener">source officielle</a></li>`).join('');
-  const preuves=`<details><summary>Textes et sources (pour votre avocat ou l'agent qui vous reçoit)</summary><ul>${lois}</ul><ul>${src}</ul></details>`;
-  const contacts=(d.contacts||[]).map(c=>`<li><b>${esc(c.qui)}</b> — ${esc(c.role)}<br><span style="color:var(--ink-soft)">À demander : ${esc(c.demander)} <span class="cite">${esc(c.base)}</span></span></li>`).join('');
-  const contactsBlock=contacts?`<h3>Qui contacter</h3><ul>${contacts}</ul>`:'';
-  let main='';
-  if(mode==='loi') main=loiBlock+faireBlock;
-  else if(mode==='faire') main=faireBlock+preuves;
-  else main=faireBlock+loiBlock+`<details><summary>Sources officielles</summary><ul>${src}</ul></details>`;
-  return `<p style="font-size:1.06rem">${esc(d.simple)}</p><div class="card">${main}</div>${warn}${contactsBlock}
-    <div class="actions"><button class="act" id="exportBtn" type="button">Exporter mon dossier</button></div>
+  const preuves=`<details id="sourcesDetails"><summary>Textes et sources (pour votre avocat ou l'agent qui vous reçoit)</summary><ul>${src}</ul></details>`;
+  const avisBlock=d.avis?`<div class="stop"><b>Je ne peux pas vous dire si vous gagnerez.</b> ${esc(d.avis)} Voici comment bien préparer votre rendez-vous.</div>`:'';
+  return `<div class="card">${loiBlock}${simpleBlock}${faireBlock}${preuves}</div>${avisBlock}${warn}${contactsBlock}
+    <div class="actions"><button class="act" id="exportBtn" type="button">Préparer mon dossier</button><button class="act ghost" id="sourcesBtn" type="button">Voir les sources</button></div>
     <p class="notice">${esc(d.limite||'')}</p>`;
 }
 
