@@ -25,13 +25,18 @@ def _fold(s: str) -> str:
     return "".join(c for c in s if not unicodedata.combining(c))
 
 
-def answer(corpus: ProcedureCorpus, question: str) -> dict:
+def answer(corpus: ProcedureCorpus, question: str, historique: list | None = None) -> dict:
     if VERDICT.search(_fold(question)):
         return {"abstention": True, "raison": "prediction_verdict",
                 "message": "Je ne peux pas predire l'issue d'un proces ni dire qui a raison. "
                            + ORIENTATION,
                 "citations": [], "projet": []}
-    res = corpus.search(question)
+    # Multi-tours: un suivi ("et en 2019 ?", "c'est contre le juge de
+    # l'execution") n'a de sens qu'avec les tours precedents.
+    contexte = " ".join(
+        [str(h.get("texte", "")) for h in (historique or [])
+         if isinstance(h, dict) and h.get("role") in ("utilisateur", "user")] + [question])
+    res = corpus.search(contexte)
     if res["couverture_manquante"]:  # R5 / T6
         return {"abstention": True, "raison": "texte_de_base_pas_encore_integre",
                 "message": ("Texte de base pas encore integre: ce corpus contient le code de "

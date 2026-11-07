@@ -168,6 +168,7 @@ const $=id=>document.getElementById(id);
 const thread=$('thread'), mainEl=$('main'), input=$('input');
 let state={stage:'probleme', probleme:'', busy:false};
 let lastExport=null;
+let history=[]; // tours de la conversation — memoire de session uniquement, jamais stockee cote serveur
 
 function esc(s){return (s||'').toString().replace(/</g,'&lt;')}
 function cite(t){return esc(t).replace(/\[Article\s+([0-9]+[a-z]*)\]/gi,'<span class="cite">Article $1</span>')}
@@ -213,16 +214,17 @@ async function ask(question){
   let step=0; spans[0].classList.add('on'); spans[0].textContent='● '+STEPS[0];
   const timer=setInterval(()=>{ if(step<2){ spans[step].classList.remove('on'); spans[step].classList.add('done'); spans[step].textContent='● '+STEPS[step].replace('…',' — fait'); step++; spans[step].classList.add('on'); spans[step].textContent='● '+STEPS[step]; } }, 9000);
   try{
-    const r=await fetch('/api/ask',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question, ...situation()})});
+    const r=await fetch('/api/ask',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question, ...situation(), historique:history})});
     if(!r.ok) throw new Error(r.status);
     const d=await r.json();
+    history.push({role:'utilisateur', texte:question});
     lastExport={question, situation:situation(), reponse:d};
     clearInterval(timer);
     body.innerHTML=renderAnswer(d);
     const ex=body.querySelector('#exportBtn'); if(ex) ex.onclick=exporter;
     const sb=body.querySelector('#sourcesBtn'); const det=body.querySelector('#sourcesDetails');
     if(sb&&det) sb.onclick=()=>{ det.open=!det.open; if(det.open) det.scrollIntoView({behavior:'smooth',block:'nearest'}); };
-    botSay("<p>Si un point n'est pas clair — une pièce, un délai, une étape — demandez-le simplement.</p>");
+    if(!d.clarification) botSay("<p>Si un point n'est pas clair — une pièce, un délai, une étape — demandez-le simplement. Je retiens ce que vous m'avez déjà dit.</p>");
     state.stage='suivi';
   }catch(err){
     clearInterval(timer);
@@ -236,9 +238,10 @@ async function askProcedure(question){
   state.busy=true; $('send').disabled=true;
   const body=botSay('<div class="progress"><span class="on">● Recherche dans le code de procédure civile (2011, modifié en 2016)…</span></div>');
   try{
-    const r=await fetch('/api/ask-procedure',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question})});
+    const r=await fetch('/api/ask-procedure',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question, historique:history})});
     if(!r.ok) throw new Error(r.status);
     body.innerHTML=renderProcedure(await r.json());
+    history.push({role:'utilisateur', texte:question});
   }catch(err){
     body.innerHTML='<div class="alert"><p><b>Service indisponible</b> — réessayez dans un instant.</p></div>';
   }
@@ -257,8 +260,12 @@ function renderProcedure(d){
 function renderAnswer(d){
   const contacts=(d.contacts||[]).map(c=>`<li><b>${esc(c.qui)}</b> — ${esc(c.role)}<br><span style="color:var(--ink-soft)">À demander : ${esc(c.demander)} <span class="cite">${esc(c.base)}</span></span></li>`).join('');
   const contactsBlock=contacts?`<h3>Qui peut vous accompagner</h3><ul>${contacts}</ul>`:'';
+  if(d.clarification){
+    return `<div class="card"><div class="sec"><span class="lab">Pour chercher le bon texte</span><p style="margin:0">${esc(d.message||'')}</p><ol style="margin:6px 0 0">${(d.questions||[]).map(q=>`<li>${esc(q)}</li>`).join('')}</ol><p class="proc-cite" style="margin-top:8px">Répondez en une phrase, avec vos mots — je garde le fil de notre conversation.</p></div></div>`;
+  }
   if(d.abstention){
-    return `<div class="alert"><p><b>Je n'ai pas de texte officiel sur ce point précis.</b></p><p>${esc(d.orientation||'')}</p><p>Je reste utile sur le foncier : titre foncier, succession, partage, expropriation, expulsion, délais et pièces à réunir.</p></div>${contactsBlock}`;
+    const relance=(d.relance||[]).length?`<p><b>Pour m'aider à vous répondre :</b></p><ul>${d.relance.map(q=>`<li>${esc(q)}</li>`).join('')}</ul>`:'';
+    return `<div class="alert"><p><b>Je n'ai pas de texte officiel sur ce point précis.</b></p><p>${esc(d.message||d.orientation||'')}</p>${relance}<p>Je reste utile sur le foncier : titre foncier, succession, partage, expropriation, expulsion, délais et pièces à réunir.</p></div>${contactsBlock}`;
   }
   const lois=(d.loi||[]).map(x=>`<li>${cite(x.texte||x)}</li>`).join('');
   const loiBlock=lois?`<div class="sec"><span class="lab">Ce que dit la loi</span><ul style="margin:0;padding-left:1.15em">${lois}</ul></div>`:'';

@@ -41,6 +41,8 @@ class Ask(BaseModel):
     commune: str = ""
     documents: str = ""
     adversaire: str = ""
+    # Tours precedents [{role, texte}] — detenu par le client, jamais stocke.
+    historique: list[dict] = []
 
 
 class Export(BaseModel):
@@ -69,13 +71,13 @@ def ask_procedure(req: Ask):
     """Procedure civile (corpus prive, R1-R6): reponse deterministe citee
     label+date+pages+badge, projet 2020 en encadre separe, abstentions
     lacune/couverture/verdict. Voir docs/INTEGRATION-procedure.md."""
-    return procedure_answer(get_procedure(), req.question)
+    return procedure_answer(get_procedure(), req.question, historique=req.historique)
 
 
 @app.post("/api/ask")
 def ask(req: Ask):
-    situation = {k: v for k, v in req.model_dump().items() if k != "question" and v}
-    return agent_run(req.question, situation, searcher=get_searcher())
+    situation = {k: v for k, v in req.model_dump().items() if k not in ("question", "historique") and v}
+    return agent_run(req.question, situation, searcher=get_searcher(), historique=req.historique)
 
 
 @app.post("/api/export")
